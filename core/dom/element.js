@@ -114,7 +114,12 @@ CKEDITOR.dom.element.clearMarkers = function( database, element, removeFromDatab
 		delete database[ id ];
 	}
 };
+
 ( function() {
+
+var testElement = document.createElement( 'span' ),
+	supportsClassLists = testElement.classList,
+	rclass = /[\n\t\r]/g;
 
 CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 	/**
@@ -134,17 +139,26 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 	 *		element.addClass( 'classB' ); // <div class="classA classB">
 	 *		element.addClass( 'classA' ); // <div class="classA classB">
 	 *
+	 * @chainable
+	 * @method addClass
 	 * @param {String} className The name of the class to be added.
 	 */
-	addClass: function( className ) {
-		var c = this.$.className;
-		if ( c ) {
-			var regex = new RegExp( '(?:^|\\s)' + className + '(?:\\s|$)', '' );
-			if ( !regex.test( c ) )
-				c += ' ' + className;
+	addClass: supportsClassLists ?
+		function( className ) {
+			this.$.classList.add( className );
+
+			return this;
 		}
-		this.$.className = c || className;
-	},
+	:
+		function( className ) {
+			var c = this.$.className;
+			if ( c ) {
+				var regex = new RegExp( '(?:^|\\s)' + className + '(?:\\s|$)', '' );
+				if ( !regex.test( c ) )
+					c += ' ' + className;
+			}
+			this.$.className = c || className;
+		},
 
 	/**
 	 * Removes a CSS class name from the elements classes. Other classes
@@ -157,24 +171,36 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 	 *		element.removeClass( 'classB' );	// <div>
 	 *
 	 * @chainable
+	 * @method removeClass
 	 * @param {String} className The name of the class to remove.
 	 */
-	removeClass: function( className ) {
-		var c = this.getAttribute( 'class' );
-		if ( c ) {
-			var regex = new RegExp( '(?:^|\\s+)' + className + '(?=\\s|$)', 'i' );
-			if ( regex.test( c ) ) {
-				c = c.replace( regex, '' ).replace( /^\s+/, '' );
+	removeClass: supportsClassLists ?
+		function( className ) {
+			var $ = this.$;
+			$.classList.remove( className );
 
-				if ( c )
-					this.setAttribute( 'class', c );
-				else
-					this.removeAttribute( 'class' );
-			}
+			if ( !$.className )
+				$.removeAttribute( 'class' );
+
+			return this;
 		}
+	:
+		function( className ) {
+			var c = this.getAttribute( 'class' );
+			if ( c ) {
+				var regex = new RegExp( '(?:^|\\s+)' + className + '(?=\\s|$)', 'i' );
+				if ( regex.test( c ) ) {
+					c = c.replace( regex, '' ).replace( /^\s+/, '' );
 
-		return this;
-	},
+					if ( c )
+						this.setAttribute( 'class', c );
+					else
+						this.removeAttribute( 'class' );
+				}
+			}
+
+			return this;
+		},
 
 	/**
 	 * Checks if element has class name.
@@ -183,8 +209,8 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 	 * @returns {Boolean}
 	 */
 	hasClass: function( className ) {
-		var regex = new RegExp( '(?:^|\\s+)' + className + '(?=\\s|$)', '' );
-		return regex.test( this.getAttribute( 'class' ) );
+		// Source: jQuery.
+		return ( ' ' + this.$.className + ' ' ).replace( rclass, ' ' ).indexOf( ' ' + className + ' ' ) > -1;
 	},
 
 	/**
