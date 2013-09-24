@@ -140,6 +140,21 @@
 		}
 	};
 
+	// var editor = CKEDITOR.instances.editor1;
+	// var doc = editor.document;
+
+	// var s = new Date().getTime();
+
+	// var els = new CKEDITOR.dom.nodeList( doc.$.querySelectorAll( 'table,hr,div,ul,ol,dl,form,blockquote' ) ),
+	//     rects = [];
+
+	// for ( var i = els.count(); i--; )
+	//   rects.push( els.getItem( i ).$.getBoundingClientRect() );
+
+	// console.log( 'dur:', new Date().getTime() - s, 'ms' );
+	// console.log( rects );
+
+
 	CKEDITOR.plugins.magicline2 = {
 		lineDetector: function( el, limit ) {
 			var fns = [],
