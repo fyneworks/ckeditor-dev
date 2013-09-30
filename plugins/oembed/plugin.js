@@ -22,7 +22,7 @@
 		init: function( editor ) {
 			var oembedProviderUrl = new CKEDITOR.template(
 					editor.config.oembedProviderUrl ||
-					'http://noembed.com/embed?nowrap=on&url={url}&callback={callback}'
+					'//noembed.com/embed?nowrap=on&url={url}&callback={callback}'
 				);
 
 			CKEDITOR.dialog.add( 'oembed', this.path + 'dialogs/oembed.js' );
