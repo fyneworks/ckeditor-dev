@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+-->
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Pull quotes sample &ndash; CKEditor Sample</title>
+	<script src="../../../ckeditor.js"></script>
+	<link href="../../../samples/sample.css" rel="stylesheet">
+</head>
+<body>
+	<h1 class="samples">
+		CKEditor Sample &mdash; Pull quotes sample
+	</h1>
+
+	<p>
+		<textarea id="editor1" cols="10" rows="10">
+
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac arcu sem. Donec enim dui, tincidunt non enim et, molestie vulputate metus. Nulla sed vehicula elit. Nullam congue sem sed felis pharetra, eget gravida risus lobortis. Aenean pulvinar velit velit, posuere blandit nulla eleifend sed. In ligula tortor, tempus sollicitudin sodales eu, sagittis vel augue. Nam tristique interdum volutpat. Vivamus lectus enim, ornare a hendrerit sit amet, vehicula eu diam. Praesent non consectetur mauris. Mauris adipiscing venenatis risus quis mattis.</p>
+
+<p data-pullquote="Nullam dignissim orci augue, ut fermentum purus consequat eu.">Cras augue nisi, auctor nec urna sit amet, consectetur convallis magna. Vivamus interdum ante nulla, eget vulputate felis iaculis varius. Integer pellentesque ut elit in mollis. Nam id urna consequat, commodo dui sed, porta risus. Morbi elementum pretium laoreet. Suspendisse ac sollicitudin risus. Curabitur vestibulum mauris dolor, sed porta sem aliquam non.</p>
+
+<p>In metus urna, tempus id fringilla sollicitudin, mattis ac quam. Sed dapibus accumsan fermentum. Ut eu sagittis velit, a accumsan elit. Aenean sodales bibendum egestas. Suspendisse aliquam tempor luctus. Morbi sit amet congue urna, id adipiscing augue. Vivamus nec viverra magna. Morbi ut auctor dui, nec viverra arcu. Phasellus ante sapien, sollicitudin vel pharetra quis, egestas a justo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum egestas in ante in adipiscing. Morbi ornare tristique sodales. Sed convallis euismod lorem, sit amet suscipit mauris pharetra sit amet.</p>
+
+<ul data-pullquote="In vitae neque et elit ornare venenatis eu et felis.">
+	<li>Mauris vel volutpat lacus. Fusce tincidunt cursus rutrum. Nullam dignissim orci augue, ut fermentum purus consequat eu.</li>
+	<li>Nulla laoreet sed est vel porta. Duis vitae odio eget mi porta blandit. Sed placerat nulla massa, vel dapibus lectus iaculis in. Proin et mi nec quam commodo dictum vitae vel nunc. Curabitur eget cursus enim. Maecenas id urna sed lectus consectetur viverra. Aliquam nec scelerisque leo, vel semper nibh. Fusce id eros sit amet ipsum sodales lobortis eu a nisi.</li>
+</ul>
+
+<p>Aliquam ut sagittis leo, sed tristique diam. In hac habitasse platea dictumst. In vitae neque et elit ornare venenatis eu et felis. Nullam consectetur suscipit ligula ut tincidunt. Nunc fringilla nec ipsum ut pretium. Nulla facilisi. Sed condimentum augue a rutrum euismod. Suspendisse potenti. Maecenas purus diam, feugiat vitae neque in, pharetra elementum lorem. Cras vitae nunc sed magna lacinia luctus.</p>
+
+		</textarea>
+	</p>
+	<script>
+
+CKEDITOR.replace( 'editor1', {
+	extraPlugins: 'pullquote',
+	height: 500,
+	contentsCss: [
+		'../../../contents.css',
+		'contents.css'
+	]
+} );
+
+	</script>
+</body>
+</html>
