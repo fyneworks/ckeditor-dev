@@ -380,7 +380,7 @@
 				deleteCells( cellsToDelete[ i ] );
 
 			if ( cellToFocus )
-				placeCursorInCell( cellToFocus, true, editor );
+				placeCursorInCell( cellToFocus, true );
 			else if ( table )
 				table.remove();
 		} else if ( selectionOrCell instanceof CKEDITOR.dom.element ) {
@@ -399,12 +399,11 @@
 		cell.trim();
 	}
 
-	function placeCursorInCell( cell, placeAtEnd, editor ) {
+	function placeCursorInCell( cell, placeAtEnd ) {
 
-		if ( CKEDITOR.env.ie && CKEDITOR.env.version < 11 && editor ) {
+		if ( CKEDITOR.env.ie && CKEDITOR.env.version < 11 ) {
 			// Required by #10308, placeCursorInCell was throwing unspecified error while not having focus
 			CKEDITOR.document.focus();
-			editor.focus();
 		}
 
 		var range = new CKEDITOR.dom.range( cell.getDocument() );
@@ -702,7 +701,7 @@
 				exec: function( editor ) {
 					var selection = editor.getSelection(),
 						rowsToSelect = deleteRows( selection );
-					placeCursorInCell( rowsToSelect, false, editor );
+					placeCursorInCell( rowsToSelect, false );
 				}
 			} ) );
 
@@ -727,7 +726,7 @@
 				exec: function( editor ) {
 					var selection = editor.getSelection();
 					var element = deleteColumns( selection );
-					element && placeCursorInCell( element, true, editor );
+					element && placeCursorInCell( element, true );
 				}
 			} ) );
 
