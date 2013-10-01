@@ -370,7 +370,7 @@
 			newCell.insertAfter( cell );
 	}
 
-	function deleteCells( selectionOrCell ) {
+	function deleteCells( selectionOrCell, editor ) {
 		if ( selectionOrCell instanceof CKEDITOR.dom.selection ) {
 			var cellsToDelete = getSelectedCells( selectionOrCell );
 			var table = cellsToDelete[ 0 ] && cellsToDelete[ 0 ].getAscendant( 'table' );
@@ -380,7 +380,7 @@
 				deleteCells( cellsToDelete[ i ] );
 
 			if ( cellToFocus )
-				placeCursorInCell( cellToFocus, true );
+				placeCursorInCell( cellToFocus, true, editor );
 			else if ( table )
 				table.remove();
 		} else if ( selectionOrCell instanceof CKEDITOR.dom.element ) {
@@ -399,7 +399,14 @@
 		cell.trim();
 	}
 
-	function placeCursorInCell( cell, placeAtEnd ) {
+	function placeCursorInCell( cell, placeAtEnd, editor ) {
+
+		if ( CKEDITOR.env.ie && CKEDITOR.env.version < 11 && editor ) {
+			// Required by #10308, placeCursorInCell was throwing unspecified error while not having focus
+			CKEDITOR.document.focus();
+			editor.focus();
+		}
+
 		var range = new CKEDITOR.dom.range( cell.getDocument() );
 		if ( !range[ 'moveToElementEdit' + ( placeAtEnd ? 'End' : 'Start' ) ]( cell ) ) {
 			range.selectNodeContents( cell );
@@ -693,8 +700,9 @@
 			addCmd( 'rowDelete', createDef( {
 				requiredContent: 'table',
 				exec: function( editor ) {
-					var selection = editor.getSelection();
-					placeCursorInCell( deleteRows( selection ) );
+					var selection = editor.getSelection(),
+						rowsToSelect = deleteRows( selection );
+					placeCursorInCell( rowsToSelect, false, editor );
 				}
 			} ) );
 
@@ -719,7 +727,7 @@
 				exec: function( editor ) {
 					var selection = editor.getSelection();
 					var element = deleteColumns( selection );
-					element && placeCursorInCell( element, true );
+					element && placeCursorInCell( element, true, editor );
 				}
 			} ) );
 
@@ -743,7 +751,7 @@
 				requiredContent: 'table',
 				exec: function( editor ) {
 					var selection = editor.getSelection();
-					deleteCells( selection );
+					deleteCells( selection, editor );
 				}
 			} ) );
 
