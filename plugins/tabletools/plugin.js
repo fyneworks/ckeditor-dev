@@ -182,7 +182,7 @@
 			// 3. Into table's parent element if it's the very last row.
 			var cursorPosition = new CKEDITOR.dom.element( rows[ endRowIndex + 1 ] || ( startRowIndex > 0 ? rows[ startRowIndex - 1 ] : null ) || table.$.parentNode );
 
-			for ( i = rowsToDelete.length; i >= 0; i-- )
+			for ( i = rowsToDelete.length - 1; i >= 0; i-- )
 				deleteRows( rowsToDelete[ i ] );
 
 			return cursorPosition;
