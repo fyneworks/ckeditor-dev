@@ -613,14 +613,26 @@
 				// A class applied to editable during resizing.
 				cursorClass = 'cke_image2_s' + ( !~factor ? 'w' : 'e' ),
 
+				// This a mousemove event buffer to improve performance.
+				mouseMoveBuff = CKEDITOR.tools.eventsBuffer( 25, onMouseMove ),
+
 				nativeEvt, newWidth, newHeight, updateData,
+				screenX, screenY,
 				moveDiffX, moveDiffY, moveRatio;
 
 			// Save the undo snapshot first: before resizing.
 			editor.fire( 'saveSnapshot' );
 
+
 			// Mousemove listeners are removed on mouseup.
-			attachToDocuments( 'mousemove', onMouseMove, listeners );
+			attachToDocuments( 'mousemove', function( evt ) {
+				var $ = evt.data.$;
+
+				screenX = $.screenX;
+				screenY = $.screenY;
+
+				mouseMoveBuff.input();
+			}, listeners );
 
 			// Clean up the mousemove listener. Update widget data if valid.
 			attachToDocuments( 'mouseup', onMouseUp, listeners );
@@ -676,12 +688,10 @@
 			// 	               |         |
 			// 	                <------->
 			// 	                moveDiffX
-			function onMouseMove( evt ) {
-				nativeEvt = evt.data.$;
-
+			function onMouseMove() {
 				// This is how far the mouse is from the point the button was pressed.
-				moveDiffX = nativeEvt.screenX - startX;
-				moveDiffY = startY - nativeEvt.screenY;
+				moveDiffX = screenX - startX;
+				moveDiffY = startY - screenY;
 
 				// This is the aspect ratio of the move difference.
 				moveRatio = Math.abs( moveDiffX / moveDiffY );
