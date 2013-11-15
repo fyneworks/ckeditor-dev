@@ -97,6 +97,14 @@ ul {
 	margin: 0;
 }
 
+#menu a {
+	color: #2e3436;
+}
+
+#menu a:hover {
+	text-decoration: underline;
+}
+
 /* ---- Content ----------------------------------------------------*/
 
 #content {
