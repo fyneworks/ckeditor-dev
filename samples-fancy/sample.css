@@ -1,0 +1,236 @@
+/*
+Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+
+body, html {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: Arial,Helvetica,sans-serif;
+	color: #2e3436;
+}
+
+a {
+	color: #ef7362;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #FF2407;
+}
+
+abbr {
+	border-bottom: 1px dotted #2e3436;
+	cursor: pointer;
+}
+
+strong {
+	font-weight: bold;
+}
+
+ul {
+	list-style: square;
+}
+
+/* ---- Top navigation ----------------------------------------------------*/
+
+#navigation {
+	width: 100%;
+	background: #454545;
+	height: 26px;
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+}
+
+#navigation ul {
+	width: 960px;
+	margin: 0 0 0 40px;
+	padding: 0;
+}
+
+#navigation ul li {
+	display: inline-block;
+	margin-right: 23px;
+}
+
+#navigation a {
+	font-size: 0.563em;
+	line-height: 26px;
+	color: #c3c3c3;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+#navigation a:hover {
+	color: #fff;
+}
+
+/* ---- Menu ----------------------------------------------------*/
+
+#menu {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	background: #eee;
+	width: 250px;
+	z-index: 0;
+	padding-top: 26px;
+	font-size: .83em;
+}
+
+#menu dl {
+	margin: 1.5em 35px;
+}
+
+#menu dt {
+	font-size: 1.5em
+}
+
+#menu dd {
+	margin: 0;
+}
+
+/* ---- Content ----------------------------------------------------*/
+
+#content {
+	margin-left: 250px;
+	min-width: 700px;
+	max-width: 900px;
+	padding: 190px 30px 30px;
+	font-size: .83em;
+}
+
+#content .samples,
+#content code {
+	font-family: monospace;
+	background: #f6f6f6;
+}
+
+#content p,
+#content ul,
+#content pre {
+	line-height: 1.6em;
+}
+
+#content h1,
+#content h2,
+#content h3 {
+	font-weight: normal;
+}
+
+#content * + h2,
+#content * + h3,
+#content * + ul,
+#content * + pre.samples {
+	margin-top: 1.5em;
+}
+
+#content h2,
+#content h3,
+#content ul,
+#content pre.samples {
+	margin-bottom: 1.5em;
+}
+
+#content pre.samples {
+	padding: 20px;
+	font-size: 1.1em;
+	border-bottom: 1px solid #eee;
+}
+
+#content code {
+	border-top: 1px solid #f1f1f1;
+	border-left: 1px solid #f1f1f1;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 3px 4px;
+}
+
+#content code {
+	font-family: monospace;
+}
+
+#content h2 {
+	font-size: 1.6em;
+}
+
+#content h3 {
+	font-size: 1.4em;
+}
+
+#content header {
+	position: absolute;
+	top: 26px;
+	left: 250px;
+	right: 0;
+
+	height: 160px;
+	background: #cfecf0;
+	overflow: hidden;
+}
+
+#content header h1 {
+	margin-top: 95px;
+	font-size: 1.846em;
+	color: #ef7362;
+	margin: 90px 0 0 30px;
+}
+
+#content header ul {
+	margin: 0 0 0 30px;
+	padding: 0;
+}
+
+#content header ul li {
+	display: inline-block;
+}
+
+#content header ul li + li:before {
+	content: "›";
+	color: #909490;
+	padding: 0 6px 0 4px;
+}
+
+#content header li,
+#content header li a {
+	color: #909490;
+}
+
+#content header li a:hover {
+	text-decoration: underline;
+}
+
+/**
+ *	CKEditor editables are automatically set with the "cke_editable" class
+ *	plus cke_editable_(inline|themed) depending on the editor type.
+ */
+
+/* Style a bit the inline editables. */
+.cke_editable.cke_editable_inline
+{
+	cursor: pointer;
+	background: #eee;
+}
+
+/* Once an editable element gets focused, the "cke_focus" class is
+   added to it, so we can style it differently. */
+.cke_editable.cke_editable_inline.cke_focus
+{
+	box-shadow: inset 0px 0px 20px 3px #ddd, inset 0 0 1px #000;
+	outline: none;
+	cursor: text;
+}
+
+/* Avoid pre-formatted overflows inline editable. */
+.cke_editable_inline pre
+{
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
