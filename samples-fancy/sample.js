@@ -99,7 +99,10 @@
 			'</div>'
 		),
 
-		currentUrl = document.URL.match( /[^\/]*\.html/g ).pop(),
+		currentUrl = document.URL.match( /\/$/g ) ?
+			'index.html'
+				:
+			document.URL.match( /[^\/]*\.html/g ).pop(),
 		currentCategoryUrl = null,
 		body;
 
