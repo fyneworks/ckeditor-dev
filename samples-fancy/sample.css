@@ -6,6 +6,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 html
 {
 	height: 100%;
+	background: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAC6CAYAAABvGCc/AAAACXBIWXMAAA6hAAAOoQHVmA8QAAAAB3RJTUUH3QsSDyYri4o2DQAAABpJREFUKM9jOP/mw38mBgYGhlFilBglBh8BAOq2BR31ePO1AAAAAElFTkSuQmCC ) top left repeat-x;
 }
 
 body
@@ -22,7 +23,7 @@ body
 	max-width: 960px;
 	min-height: 100%;
 
-	background: url( assets/bg.png ) top left repeat-x;
+	background: url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAABCAIAAACg8teTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsSDyY4DzR30wAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAUSURBVCjPY3z37h3DKBgFo4AQAADXKALMimBbcQAAAABJRU5ErkJggg== ) top left repeat-y;
 }
 
 a
@@ -193,16 +194,13 @@ header li a:hover
 
 #menu
 {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
+	float: left;
 	background: #eee;
 	width: 270px;
 
-	overflow: hidden;
 	padding-top: 40px;
-	z-index: 0;
+	margin-left: -300px;
+	overflow: hidden;
 }
 
 #menu dl
