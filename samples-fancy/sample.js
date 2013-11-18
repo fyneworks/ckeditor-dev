@@ -99,12 +99,15 @@
 			'</div>'
 		),
 
+		badgeNewTpl = '<span class="badge new" title="New!">&#9733;</span>',
+		badgeBetaTpl = '<span class="badge beta" title="Beta">&beta;</span>',
+
 		currentUrl = document.URL.match( /\/$/g ) ?
 			'index.html'
 				:
 			document.URL.match( /[^\/]*\.html/g ).pop(),
 		currentCategoryUrl = null,
-		body;
+		header, body;
 
 	function initNavigation() {
 		CKEDITOR.dom.element.createFromHtml( navigationTpl ).appendTo( body, true );
@@ -112,6 +115,8 @@
 
 	function initMenu() {
 		var menu = CKEDITOR.dom.element.createFromHtml( '<div id="menu"></div>' );
+
+		header = CKEDITOR.document.getElementsByTag( 'h1' ).getItem( 0 ),
 
 		menu.appendTo( body, true );
 
@@ -126,11 +131,19 @@
 				if ( typeof sample == 'object' ) {
 					name = sample.name;
 
-					if ( sample.isBeta )
-						badges += '<span class="badge beta" title="Beta">&beta;</span>';
+					if ( sample.isBeta ) {
+						badges += badgeBetaTpl;
 
-					if ( sample.isNew )
-						badges += '<span class="badge new" title="New!">&#9733;</span>';
+						if ( url == currentUrl )
+							CKEDITOR.dom.element.createFromHtml( badgeBetaTpl ).appendTo( header );
+					}
+
+					if ( sample.isNew ) {
+						badges += badgeNewTpl;
+
+						if ( url == currentUrl )
+							CKEDITOR.dom.element.createFromHtml( badgeNewTpl ).appendTo( header );
+					}
 				} else
 					name = sample;
 
@@ -157,12 +170,10 @@
 	}
 
 	function initBreadcrumbs() {
-		var header = CKEDITOR.document.getElementsByTag( 'header' ).getItem( 0 ),
-
-			itemsHtml = breadcrumbsItemTpl.output( {
-				name: 'CKEditor Samples',
-				url: 'index.html'
-			} );
+		var itemsHtml = breadcrumbsItemTpl.output( {
+			name: 'CKEditor Samples',
+			url: 'index.html'
+		} );
 
 		if ( currentCategoryUrl ) {
 			itemsHtml += breadcrumbsItemTpl.output( {
@@ -173,7 +184,7 @@
 
 		CKEDITOR.dom.element.createFromHtml( breadcrumbsTpl.output( {
 			items: itemsHtml
-		} ) ).appendTo( header );
+		} ) ).insertAfter( header );
 	}
 
 	function initFooter() {
@@ -182,13 +193,18 @@
 		} ) ).appendTo( body );
 	}
 
-	CKEDITOR.document.on( 'DOMContentLoaded', function() {
+	function ready() {
 		body = CKEDITOR.document.getBody();
 
 		initNavigation();
 		initMenu();
 		initBreadcrumbs();
 		initFooter();
-	} );
+	}
+
+	if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 )
+		window.attachEvent( 'onload', ready );
+	else
+		document.addEventListener( 'DOMContentLoaded', ready, false );
 })();
 // %LEAVE_UNMINIFIED% %REMOVE_LINE%
