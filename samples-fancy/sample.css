@@ -3,41 +3,155 @@ Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 
-body, html {
-	padding: 0;
-	margin: 0;
+html
+{
+	height: 100%;
 }
 
-body {
+body
+{
 	font-family: Arial,Helvetica,sans-serif;
 	color: #2e3436;
+	font-size: 13px;
+	position: relative;
+
+	margin: 0;
+	padding: 0 30px 0 300px;
+
+	min-width: 710px;
+	max-width: 960px;
+	min-height: 100%;
+
+	background: url( assets/bg.png ) top left repeat-x;
 }
 
-a {
+a
+{
 	color: #ef7362;
 	text-decoration: none;
 }
 
-a:hover {
+a:hover
+{
 	color: #FF2407;
 }
 
-abbr {
+abbr
+{
 	border-bottom: 1px dotted #2e3436;
 	cursor: pointer;
 }
 
-strong {
+strong
+{
 	font-weight: bold;
 }
 
-ul {
+em
+{
+	font-style: italic;
+}
+
+ul
+{
 	list-style: square;
+}
+
+
+.samples, code
+{
+	background: #f6f6f6;
+	font-size: .9em;
+}
+
+p, ul, pre
+{
+	line-height: 1.8em;
+}
+
+h1, h2, h3
+{
+	font-weight: normal;
+}
+
+h2, h3, ul, pre.samples
+{
+	margin: 1.5em 0;
+}
+
+pre.samples
+{
+	padding: 20px;
+	border-bottom: 1px solid #eee;
+}
+
+code
+{
+	border-top: 1px solid #f1f1f1;
+	border-left: 1px solid #f1f1f1;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 3px 4px;
+	white-space: nowrap;
+}
+
+h2
+{
+	font-size: 1.846em;
+}
+
+h3
+{
+	font-size: 1.5em;
+}
+
+header
+{
+	height: 160px;
+	padding-top: 26px;
+	overflow: hidden;
+	margin-bottom: 30px;
+}
+
+header h1
+{
+	font-size: 1.846em;
+	color: #ef7362;
+	margin: 85px 0 0;
+}
+
+header ul
+{
+	margin: 0;
+	padding: 0;
+}
+
+header ul li
+{
+	display: inline-block;
+}
+
+header ul li + li:before
+{
+	content: "›";
+	color: #909490;
+	padding: 0 6px 0 4px;
+}
+
+header li, header li a
+{
+	color: #909490;
+}
+
+header li a:hover
+{
+	text-decoration: underline;
 }
 
 /* ---- Top navigation ----------------------------------------------------*/
 
-#navigation {
+#navigation
+{
 	width: 100%;
 	background: #454545;
 	height: 26px;
@@ -48,172 +162,102 @@ ul {
 	right: 0;
 }
 
-#navigation ul {
+#navigation ul
+{
 	width: 960px;
-	margin: 0 0 0 40px;
+	margin: 0 0 0 30px;
 	padding: 0;
 }
 
-#navigation ul li {
+#navigation ul li
+{
 	display: inline-block;
 	margin-right: 23px;
 }
 
-#navigation a {
-	font-size: 0.563em;
+#navigation a
+{
+	font-size: 0.692em;
 	line-height: 26px;
 	color: #c3c3c3;
 	text-transform: uppercase;
 	font-weight: bold;
 }
 
-#navigation a:hover {
+#navigation a:hover
+{
 	color: #fff;
 }
 
 /* ---- Menu ----------------------------------------------------*/
 
-#menu {
-	position: fixed;
+#menu
+{
+	position: absolute;
 	top: 0;
-	bottom: 0;
 	left: 0;
+	bottom: 0;
 	background: #eee;
-	width: 250px;
+	width: 270px;
+
+	overflow: hidden;
+	padding-top: 40px;
 	z-index: 0;
-	padding-top: 26px;
-	font-size: .83em;
 }
 
-#menu dl {
-	margin: 1.5em 35px;
+#menu dl
+{
+	margin: 1.5em 30px;
 }
 
-#menu dt {
-	font-size: 1.5em
+#menu dt
+{
+	font-size: 1.5em;
 }
 
-#menu dd {
+#menu .current {
+	font-weight: bold;
+}
+
+#menu dd
+{
 	margin: 0;
 }
 
-#menu a {
+#menu a
+{
 	color: #2e3436;
 }
 
-#menu a:hover {
+#menu a:hover
+{
 	text-decoration: underline;
 }
 
-/* ---- Content ----------------------------------------------------*/
-
-#content {
-	margin-left: 250px;
-	min-width: 700px;
-	max-width: 900px;
-	padding: 200px 30px 30px;
-	font-size: .83em;
+#menu ul
+{
+	padding-left: 30px;
 }
 
-#content .samples,
-#content code {
-	font-family: monospace;
-	background: #f6f6f6;
+/* ---- Footer ----------------------------------------------------*/
+
+#footer
+{
+	margin-top: 30px;
+	line-height: 60px;
+	text-align: right;
+	font-size: .9em;
+	color: #aaa;
 }
 
-#content p,
-#content ul,
-#content pre {
-	line-height: 1.6em;
+#footer hr
+{
+	border: 0;
+	border-top: 1px solid #ddd;
+	margin-bottom: 0px;
 }
 
-#content h1,
-#content h2,
-#content h3 {
-	font-weight: normal;
-}
-
-#content * + h2,
-#content * + h3,
-#content * + ul,
-#content * + pre.samples {
-	margin-top: 1.5em;
-}
-
-#content h2,
-#content h3,
-#content ul,
-#content pre.samples {
-	margin-bottom: 1.5em;
-}
-
-#content pre.samples {
-	padding: 20px;
-	font-size: 1.1em;
-	border-bottom: 1px solid #eee;
-}
-
-#content code {
-	border-top: 1px solid #f1f1f1;
-	border-left: 1px solid #f1f1f1;
-	border-right: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	padding: 3px 4px;
-}
-
-#content code {
-	font-family: monospace;
-}
-
-#content h2 {
-	font-size: 1.6em;
-}
-
-#content h3 {
-	font-size: 1.4em;
-}
-
-#content header {
-	position: absolute;
-	top: 26px;
-	left: 250px;
-	right: 0;
-
-	height: 160px;
-	background: #cfecf0;
-	overflow: hidden;
-}
-
-#content header h1 {
-	margin-top: 95px;
-	font-size: 1.846em;
-	color: #ef7362;
-	margin: 90px 0 0 30px;
-}
-
-#content header ul {
-	margin: 0 0 0 30px;
-	padding: 0;
-}
-
-#content header ul li {
-	display: inline-block;
-}
-
-#content header ul li + li:before {
-	content: "›";
-	color: #909490;
-	padding: 0 6px 0 4px;
-}
-
-#content header li,
-#content header li a {
-	color: #909490;
-}
-
-#content header li a:hover {
-	text-decoration: underline;
-}
+/* ---- Misc ----------------------------------------------------*/
 
 /**
  *	CKEditor editables are automatically set with the "cke_editable" class
@@ -241,4 +285,53 @@ ul {
 {
 	white-space: pre-wrap;
 	word-wrap: break-word;
+}
+
+.badge
+{
+	font-weight: bold;
+	color: #fff;
+	float: right;
+
+	width: 15px;
+	height: 15px;
+	line-height: 15px;
+	font-size: 10px;
+	text-align: center;
+
+	margin-top: 3px;
+
+	-moz-border-radius: 100px;
+	-webkit-border-radius: 100px;
+	border-radius: 100px;
+
+	cursor: pointer;
+}
+
+.badge + .badge
+{
+	margin-right: 3px;
+}
+
+.new
+{
+	background: #FF7E00;
+	border: 1px solid #DA8028;
+	text-shadow: 0 1px 0 #C97626;
+
+	-moz-box-shadow: 0 2px 3px 0 #FFA54E inset;
+	-webkit-box-shadow: 0 2px 3px 0 #FFA54E inset;
+	box-shadow: 0 2px 3px 0 #FFA54E inset;
+}
+
+.beta
+{
+	background: #18C0DF;
+	border: 1px solid #19AAD8;
+	text-shadow: 0 1px 0 #048CAD;
+	font-style: italic;
+
+	-moz-box-shadow: 0 2px 3px 0 #50D4FD inset;
+	-webkit-box-shadow: 0 2px 3px 0 #50D4FD inset;
+	box-shadow: 0 2px 3px 0 #50D4FD inset;
 }
