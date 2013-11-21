@@ -2362,8 +2362,8 @@
 	//
 
 	var transparentImageData = 'data:image/gif;base64,R0lGODlhAQABAPABAP///wAAACH5BAEKAAAALAAAAAABAAEAAAICRAEAOw%3D%3D',
-		// LEFT, RIGHT, UP, DOWN, DEL, BACKSPACE - unblock default fake sel handlers.
-		keystrokesNotBlockedByWidget = { 37:1,38:1,39:1,40:1,8:1,46:1 };
+		// LEFT, RIGHT, UP, DOWN, DEL, BACKSPACE, MENU - unblock default fake sel handlers.
+		keystrokesNotBlockedByWidget = { 37:1,38:1,39:1,40:1,8:1,46:1,93:1 };
 
 	function cancel( evt ) {
 		evt.cancel();

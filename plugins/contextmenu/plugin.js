@@ -32,6 +32,7 @@ CKEDITOR.plugins.add( 'contextmenu', {
 
 			proto: {
 				addTarget: function( element, nativeContextMenuOnCtrl ) {
+					var that = this;
 					// Opera doesn't support 'contextmenu' event, we have duo approaches employed here:
 					// 1. Inherit the 'button override' hack we introduced in v2 (#4530), while this require the Opera browser
 					//  option 'Allow script to detect context menu/right click events' to be always turned on.
@@ -114,10 +115,72 @@ CKEDITOR.plugins.add( 'contextmenu', {
 						});
 					}
 
-					if ( CKEDITOR.env.webkit ) {
+					if ( !CKEDITOR.env.ie ) {
 						var holdCtrlKey,
+							// Shows contextmenu for fake selection, automatically determines position for context menu.
+							showContextMenuForFakeSelection = function( editor, sel ) {
+
+								var referenceElement = sel.getStartElement(),
+									editable = editor.editable(),
+									referenceElementHeight = parseInt( referenceElement.getComputedStyle( 'height' ), 10 ),
+									pos = referenceElement.getDocumentPosition(),
+									editablePosition = editable.getDocumentPosition(),
+									scroll = editor.window.getScrollPosition(),
+									suggestedPosition = {
+										x: referenceElement.$.offsetLeft - scroll.x,
+										y: referenceElement.$.offsetTop + referenceElementHeight - scroll.y
+									},
+									// Maximal boundaries.
+									offsetBoundaries = {
+										minX: 0,
+										minY: 0,
+										maxX: editable.getSize( 'width' ) - 20,
+										maxY: editor.window.getViewPaneSize().height - 20
+									};
+
+								if ( editable.isInline() ) {
+									suggestedPosition = {
+										x: pos.x,
+										y: pos.y + referenceElementHeight
+									};
+									offsetBoundaries = {
+										minX: editablePosition.x,
+										minY: editablePosition.y,
+										maxX: editablePosition.x + editable.getSize( 'width' ) - 20,
+										maxY: editablePosition.y + editable.getSize( 'height' ) - 20
+									};
+								}
+
+								var newPosition = {
+									x: Math.max( suggestedPosition.x, offsetBoundaries.minX ),
+									y: Math.max( suggestedPosition.y - 20, offsetBoundaries.minY )
+								};
+
+								// Adjust contextmenu boundary position, so it will not be displayed outside the editor.
+								newPosition.x = Math.min( newPosition.x, offsetBoundaries.maxX );
+								newPosition.y = Math.min( newPosition.y, offsetBoundaries.maxY );
+
+								editor.execCommand(
+									'contextMenu',
+									newPosition
+								);
+							},
 							onKeyDown = function( event ) {
-								holdCtrlKey = CKEDITOR.env.mac ? event.data.$.metaKey : event.data.$.ctrlKey;
+
+								var editor = that.editor,
+									sel = editor.getSelection(),
+									editable = editor.editable();
+
+								// This condition was needed only for webkit.
+								if ( CKEDITOR.env.webkit )
+									holdCtrlKey = CKEDITOR.env.mac ? event.data.$.metaKey : event.data.$.ctrlKey;
+
+								// Catching situation when we have fake selection active + MENU key was pressed.
+								if ( sel && sel.isFake && event.data.$.keyCode == 93 ) {
+									showContextMenuForFakeSelection( editor, sel );
+									event.cancel();
+									event.data.preventDefault();
+								}
 							},
 							resetOnKeyUp = function() {
 								holdCtrlKey = 0;
@@ -150,8 +213,9 @@ CKEDITOR.plugins.add( 'contextmenu', {
 		});
 
 		editor.addCommand( 'contextMenu', {
-			exec: function() {
-				editor.contextMenu.open( editor.document.getBody() );
+			exec: function( editor, offset ) {
+				offset = offset || {};
+				editor.contextMenu.open( editor.document.getBody(), null, offset.x, offset.y );
 			}
 		});
 
