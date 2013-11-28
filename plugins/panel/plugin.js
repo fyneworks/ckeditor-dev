@@ -333,7 +333,7 @@
 							// Move the focus only if the element is marked with
 							// the _cke_focus and it it's visible (check if it has
 							// width).
-							if ( link.getAttribute( '_cke_focus' ) && link.$.offsetWidth ) {
+							if ( isFocusableLink( link ) ) {
 								this._.focusIndex = index;
 								link.focus();
 								break;
@@ -350,7 +350,7 @@
 							// Move the focus only if the element is marked with
 							// the _cke_focus and it it's visible (check if it has
 							// width).
-							if ( link.getAttribute( '_cke_focus' ) && link.$.offsetWidth ) {
+							if ( isFocusableLink( link ) ) {
 								this._.focusIndex = index;
 								link.focus();
 								break;
@@ -373,6 +373,12 @@
 			}
 		}
 	});
+
+	// @param {CKEDITOR.dom.element} link Link element which we want to test.
+	// @returns {Boolean}
+	function isFocusableLink( link ) {
+		return link.getAttribute( '_cke_focus' ) && link.$.offsetWidth;
+	}
 
 })();
 
