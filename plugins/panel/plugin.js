@@ -321,13 +321,20 @@
 			},
 
 			onKeyDown: function( keystroke ) {
-				var keyAction = this.keys[ keystroke ];
+				var keyAction = this.keys[ keystroke ],
+					linkBoundaryOffsets;
 				switch ( keyAction ) {
 					// Move forward.
 					case 'next':
 						var index = this._.focusIndex,
 							links = this.element.getElementsByTag( 'a' ),
 							link;
+						linkBoundaryOffsets = getLinkOffsets( links );
+
+						if ( index == linkBoundaryOffsets.last ) {
+							// Index will be increased in while control statement, so it needs to be decreased by 1.
+							index = linkBoundaryOffsets.first - 1;
+						}
 
 						while ( ( link = links.getItem( ++index ) ) ) {
 							// Move the focus only if the element is marked with
@@ -345,6 +352,12 @@
 					case 'prev':
 						index = this._.focusIndex;
 						links = this.element.getElementsByTag( 'a' );
+						linkBoundaryOffsets = getLinkOffsets( links );
+
+						if ( index == linkBoundaryOffsets.first ) {
+							// Index will be decreased in the while control statement, so it needs to be increased by 1.
+							index = linkBoundaryOffsets.last + 1;
+						}
 
 						while ( index > 0 && ( link = links.getItem( --index ) ) ) {
 							// Move the focus only if the element is marked with
@@ -373,6 +386,37 @@
 			}
 		}
 	});
+
+	// Returns object specifying first and last focusable link index, from given node list.
+	// @param {CKEDITOR.dom.nodeList} nodeList
+	// @returns {Object} Object having first and last properties.
+	function getLinkOffsets( nodeList ) {
+		var firstFocusableIndex,
+			lastFocusableIndex,
+			linksCount = nodeList.count(),
+			i;
+
+		// Determine first focusable item.
+		for ( i = 0; i < linksCount; i++ ) {
+			if ( isFocusableLink( nodeList.getItem( i ) ) ) {
+				firstFocusableIndex = i;
+				break;
+			}
+		}
+
+		// Determine last focusable item.
+		for ( i = linksCount-1; i >= 0; i-- ) {
+			if ( isFocusableLink( nodeList.getItem( i ) ) ) {
+				lastFocusableIndex = i;
+				break;
+			}
+		}
+
+		return {
+			first: firstFocusableIndex,
+			last: lastFocusableIndex
+		};
+	}
 
 	// @param {CKEDITOR.dom.element} link Link element which we want to test.
 	// @returns {Boolean}
