@@ -327,7 +327,30 @@
 					case 'next':
 						var index = this._.focusIndex,
 							links = this.element.getElementsByTag( 'a' ),
+							linksCount = links.count(),
+							firstFocusableIndex = -1,
+							lastFocusableIndex = -1,
 							link;
+
+						// Determine first focusable item.
+						for ( var i = 0; i < linksCount; i++ ) {
+							if ( isFocusableLink( links.getItem( i ) ) ) {
+								firstFocusableIndex = i;
+								break;
+							}
+						}
+
+						// Determine last focusable item.
+						for ( i = linksCount-1; i >= 0; i-- ) {
+							if ( isFocusableLink( links.getItem( i ) ) ) {
+								lastFocusableIndex = i;
+								break;
+							}
+						}
+
+						if ( index == links.count() - 1 )
+							// Index will be increased right in while control statement, so it needs to be decreased by 1.
+							index = firstFocusableIndex - 1;
 
 						while ( ( link = links.getItem( ++index ) ) ) {
 							// Move the focus only if the element is marked with
@@ -344,7 +367,29 @@
 						// Move backward.
 					case 'prev':
 						index = this._.focusIndex;
-						links = this.element.getElementsByTag( 'a' );
+						links = this.element.getElementsByTag( 'a' ),
+						linksCount = links.count();
+
+						// Determine first focusable item.
+						for ( i = 0; i < linksCount; i++ ) {
+							if ( isFocusableLink( links.getItem( i ) ) ) {
+								firstFocusableIndex = i;
+								break;
+							}
+						}
+
+						// Determine last focusable item.
+						for ( i = linksCount-1; i >= 0; i-- ) {
+							if ( isFocusableLink( links.getItem( i ) ) ) {
+								lastFocusableIndex = i;
+								break;
+							}
+						}
+
+						// Determine last focusable link index.
+						if ( index == firstFocusableIndex )
+							// Index will be decreased right in the while control statement, so it needs to be increased by 1.
+							index = lastFocusableIndex + 1;
 
 						while ( index > 0 && ( link = links.getItem( --index ) ) ) {
 							// Move the focus only if the element is marked with
