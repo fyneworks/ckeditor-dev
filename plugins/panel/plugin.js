@@ -348,7 +348,7 @@
 							}
 						}
 
-						if ( index == links.count() - 1 )
+						if ( index == lastFocusableIndex )
 							// Index will be increased right in while control statement, so it needs to be decreased by 1.
 							index = firstFocusableIndex - 1;
 
