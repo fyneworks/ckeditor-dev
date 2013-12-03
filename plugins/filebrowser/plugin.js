@@ -356,7 +356,7 @@
 	});
 
 	CKEDITOR.on( 'dialogDefinition', function( evt ) {
-		// We require filebrowser plugin to be loaded.
+		// Filebrowser plugin got to be loaded (#11165).
 		if ( !evt.editor.plugins.filebrowser )
 			return;
 
