@@ -23,6 +23,11 @@
 
 		onLoad: function( editor ) {
 			CKEDITOR.addCss(
+			'.cke_image_nocaption{' +
+				// This is to remove unwanted space so resize
+				// wrapper is displayed property.
+				'line-height:0' +
+			'}' +
 			'.cke_image_align_center{' +
 				'text-align:center' +
 			'}' +
@@ -272,6 +277,8 @@
 					this.element.removeStyle( 'float' );
 					image.removeStyle( 'float' );
 				}
+
+				this.wrapper[ ( data.hasCaption ? 'remove' : 'add' ) + 'Class' ]( 'cke_image_nocaption' );
 
 				this.setData( data );
 
