@@ -28,13 +28,13 @@
 				// wrapper is displayed property.
 				'line-height:0' +
 			'}' +
-			'.cke_image_align_center{' +
+			'.cke_image_center{' +
 				'text-align:center' +
 			'}' +
-			'.cke_image_align_left{' +
+			'.cke_image_left{' +
 				'float:left' +
 			'}' +
-			'.cke_image_align_right{' +
+			'.cke_image_right{' +
 				'float:right' +
 			'}' +
 			'.image{' +
@@ -504,10 +504,10 @@
 			align = widget.data.align;
 
 		for ( var a in { left: 1, right: 1, center: 1 } )
-			wrapper.removeClass( 'cke_image_align_' + a );
+			wrapper.removeClass( 'cke_image_' + a );
 
 		if ( align != 'none' )
-			wrapper.addClass( 'cke_image_align_' + align );
+			wrapper.addClass( 'cke_image_' + align );
 	}
 
 	// Returns a function that creates widgets from all <img> and
