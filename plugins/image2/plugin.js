@@ -32,7 +32,7 @@
 			'.cke_image_align_right{' +
 				'float:right' +
 			'}' +
-			'.cke_image_align_center.image{' +
+			'.image{' +
 				'display:inline-block' +
 			'}' +
 
@@ -587,17 +587,37 @@
 			var styles = CKEDITOR.tools.parseCssText( attrs.style || '' );
 
 			// If centering, wrap downcasted element.
-			// Wrappers for <img> and <figure> are <p> and <div>, respectively.
-			if ( align == 'center' && el.name != 'p' ) {
-				var name = el.name == 'img' ? 'p' : 'div';
+			if ( align == 'center' ) {
+				// If there's no centering wrapper yet, i.e. when the widget is block
+				// and centering was done with widget's wrapper class, in the external
+				// data representation the figure must be wrapped with an element holding
+				// an inline style:
+				//
+				// 	<div style="text-align:center">
+				// 		<figure class="image" style="display:inline-block">
+				//			<img alt="A" src="B" />
+				// 			<figcaption>C</figcaption>
+				// 		</figure>
+				// 	</div>
+				if ( el.name == 'figure' ) {
+					styles.display = 'inline-block';
+					el = el.wrapWith( new CKEDITOR.htmlParser.element( 'div', { style: 'text-align:center' } ) );
+				}
 
-				el = el.wrapWith( new CKEDITOR.htmlParser.element( name, {
-					'style': 'text-align:center'
-				} ) );
+				// If there's centering wrapper, make sure that in external data
+				// representation it has an inline style. Note that since centering
+				// is done internally with classes of widget's wrapper, no styles are
+				// applied to centering wrapper during editor's lifetime:
+				//
+				// 	<p style="text-align:center">
+				// 		<img alt="A" src="B" />
+				// 	</p>
+				else
+					styles[ 'text-align' ] = 'center';
 			}
 
 			// If left/right, add float style to the downcasted element.
-			else if ( align in { left:1,right:1 } )
+			else if ( align in { left: 1, right: 1 } )
 				styles[ 'float' ] = align;
 
 			// Update element styles.
