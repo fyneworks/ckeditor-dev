@@ -110,6 +110,8 @@
 	// @param {CKEDITOR.editor}
 	// @returns {Object}
 	function widgetDef( editor ) {
+		var captionedClass = editor.config.image2_captionedClass;
+
 		return {
 			// Widget-specific rules for Allowed Content Filter.
 			allowedContent: {
@@ -120,7 +122,7 @@
 				},
 				figcaption: true,
 				figure: {
-					classes: '!caption',
+					classes: '!' + captionedClass,
 					styles: 'float,display'
 				},
 				img: {
