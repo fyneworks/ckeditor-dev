@@ -23,6 +23,16 @@
 
 		onLoad: function( editor ) {
 			CKEDITOR.addCss(
+			'.cke_image_align_center{' +
+				'text-align:center' +
+			'}' +
+			'.cke_image_align_left{' +
+				'float:left' +
+			'}' +
+			'.cke_image_align_right{' +
+				'float:right' +
+			'}' +
+
 			'.cke_editable.cke_image_sw, .cke_editable.cke_image_sw *{cursor:sw-resize !important}' +
 			'.cke_editable.cke_image_se, .cke_editable.cke_image_se *{cursor:se-resize !important}' +
 			'.cke_image_resizer{' +
@@ -499,20 +509,11 @@
 		var wrapper = widget.wrapper,
 			align = widget.data.align;
 
-		if ( align == 'center' ) {
-			if ( !widget.inline )
-				wrapper.setStyle( 'text-align', 'center' );
+		for ( var a in { left: 1, right: 1, center: 1 } )
+			wrapper.removeClass( 'cke_image_align_' + a );
 
-			wrapper.removeStyle( 'float' );
-		} else {
-			if ( !widget.inline )
-				wrapper.removeStyle( 'text-align' );
-
-			if ( align == 'none' )
-				wrapper.removeStyle( 'float' );
-			else
-				wrapper.setStyle( 'float', align );
-		}
+		if ( align != 'none' )
+			wrapper.addClass( 'cke_image_align_' + align );
 	}
 
 	// Returns a function that creates widgets from all <img> and
