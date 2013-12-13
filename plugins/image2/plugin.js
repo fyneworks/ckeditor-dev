@@ -32,6 +32,9 @@
 			'.cke_image_align_right{' +
 				'float:right' +
 			'}' +
+			'.cke_image_align_center.image{' +
+				'display:inline-block' +
+			'}' +
 
 			'.cke_editable.cke_image_sw, .cke_editable.cke_image_sw *{cursor:sw-resize !important}' +
 			'.cke_editable.cke_image_se, .cke_editable.cke_image_se *{cursor:se-resize !important}' +
@@ -271,11 +274,6 @@
 					image.removeStyle( 'float' );
 				}
 
-				// Get rid of extra vertical space when there's no caption.
-				// It will improve the look of the resizer.
-				if ( !data.hasCaption )
-					this.wrapper.setStyle( 'line-height', '0' );
-
 				this.setData( data );
 
 				// Setup dynamic image resizing with mouse.
@@ -336,14 +334,6 @@
 						else if ( newValue == 'center' && changed( data, 'hasCaption' ) && !hasCaptionAfter ) {
 							data.destroy();
 							data.element = wrapInCentering( editor, element );
-						}
-
-						// Finally set display for figure.
-						if ( element.is( 'figure' ) ) {
-							if ( newValue == 'center' )
-								element.setStyle( 'display', 'inline-block' );
-							else
-								element.removeStyle( 'display' );
 						}
 					},
 
@@ -408,9 +398,7 @@
 			function wrapInCentering( editor, element ) {
 				// When widget gets centered. Wrapper must be created.
 				// Create new <p|div> with text-align:center.
-				var center = doc.createElement( editor.activeEnterMode == CKEDITOR.ENTER_P ? 'p' : 'div', {
-					styles: { 'text-align': 'center' }
-				} );
+				var center = doc.createElement( editor.activeEnterMode == CKEDITOR.ENTER_P ? 'p' : 'div' );
 
 				// Replace element with centering wrapper.
 				replaceSafely( center, element );
