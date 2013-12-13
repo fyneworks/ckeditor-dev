@@ -124,6 +124,71 @@
 		}
 	} );
 
+	// Returns "image" widget definition. Definition is created for editor context
+	// because it depends on configuration options.
+	//
+	//     +---------------------------------+-------------------------------------------+
+	//     |                          Captioned widget                                   |
+	//     +---------------------------------+-------------------------------------------+
+	//     |       Internal structure        |             Data structure                |
+	//-----+---------------------------------+-------------------------------------------+
+	//     |                                 |                                           |
+	//  C  |        div(cke_image_center)    |  div{text-align:center}                   |
+	//  e  |            figure(image)        |      figure(image){display:inline-block}  |
+	//  n  |                span             |          img                              |
+	//  t  |                    img          |          figcaption                       |
+	//  e  |                    span         |                                           |
+	//  r  |                figcaption       |                                           |
+	//     |                                 |                                           |
+	//-----+---------------------------------+-------------------------------------------+
+	//     |                                 |                                           |
+	//     |        div(cke_image_left)      |  figure(image){float:left}                |
+	//  L  |            figure(image)        |      img                                  |
+	//  e  |                span             |      figcaption                           |
+	//  f  |                    img          |                                           |
+	//  t  |                    span         |                                           |
+	//     |                figcaption       |                                           |
+	//     |                                 |                                           |
+	//-----+---------------------------------+-------------------------------------------+
+	//     |                                 |                                           |
+	//     |        div                      |                                           |
+	//  N  |            figure(image)        |  figure(image)                            |
+	//  o  |                span             |      img                                  |
+	//  n  |                    img          |      figcaption                           |
+	//  e  |                    span         |                                           |
+	//     |                figcaption       |                                           |
+	//     |                                 |                                           |
+	//-----+---------------------------------+-------------------------------------------+
+	//
+	//     +---------------------------------+-------------------------------------------+
+	//     |                          Non-captioned widget                               |
+	//     +---------------------------------+-------------------------------------------+
+	//     |       Internal structure        |             Data structure                |
+	//-----+---------------------------------+-------------------------------------------+
+	//     |                                 |                                           |
+	//  C  |        div(cke_image_center)    |                                           |
+	//  e  |            p                    |  p{text-align:center}                     |
+	//  n  |                span             |      img                                  |
+	//  t  |                    img          |                                           |
+	//  e  |                    span         |                                           |
+	//  r  |                                 |                                           |
+	//     |                                 |                                           |
+	//-----+---------------------------------+-------------------------------------------+
+	//     |                                 |                                           |
+	//  L  |        span(cke_image_left)     |                                           |
+	//  e  |            img                  |  img{float}                               |
+	//  f  |            span                 |                                           |
+	//  t  |                                 |                                           |
+	//     |                                 |                                           |
+	//-----+---------------------------------+-------------------------------------------+
+	//     |                                 |                                           |
+	//  N  |        span                     |                                           |
+	//  o  |            img                  |  img                                      |
+	//  n  |            span                 |                                           |
+	//  e  |                                 |                                           |
+	//     |                                 |                                           |
+	//-----+---------------------------------+-------------------------------------------+
+	//
 	// @param {CKEDITOR.editor}
 	// @returns {Object}
 	function widgetDef( editor ) {
