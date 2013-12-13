@@ -992,3 +992,14 @@
 		return null;
 	}
 } )();
+
+/**
+ * CSS class applied to the `<figure>` element of a captioned image.
+ *
+ *		// Changes the class to "captionedImage".
+ *		CKEDITOR.config.image2_captionedClass = 'captionedImage';
+ *
+ * @cfg {String} [image2_captionedClass='image']
+ * @member CKEDITOR.config
+ */
+CKEDITOR.config.image2_captionedClass = 'image';
