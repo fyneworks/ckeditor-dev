@@ -135,7 +135,7 @@
 				figcaption: true,
 				figure: {
 					classes: '!' + captionedClass,
-					styles: 'float,display'
+					styles: 'float'
 				},
 				img: {
 					attributes: '!src,alt,width,height',
