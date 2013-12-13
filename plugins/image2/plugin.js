@@ -115,7 +115,7 @@
 			allowedContent: {
 				// This widget may need <div> centering wrapper.
 				div: {
-					match: isCenterWrapper,
+					match: centerWrapperChecker( editor ),
 					styles: 'text-align'
 				},
 				figcaption: true,
@@ -129,7 +129,7 @@
 				},
 				// This widget may need <p> centering wrapper.
 				p: {
-					match: isCenterWrapper,
+					match: centerWrapperChecker( editor ),
 					styles: 'text-align'
 				}
 			},
@@ -282,7 +282,7 @@
 				}, this );
 			},
 
-			upcast: upcastWidgetElement,
+			upcast: upcastWidgetElement( editor ),
 			downcast: downcastWidgetElement
 		};
 	}
@@ -513,58 +513,67 @@
 		}
 	}
 
-	// Creates widgets from all <img> and <figure class="caption">.
+	// Returns a function that creates widgets from all <img> and
+	// <figure class="{config.image2_captionedClass}"> elements.
 	//
-	// @param {CKEDITOR.htmlParser.element} el
-	function upcastWidgetElement( el, data ) {
-		var dimensions = { width:1,height:1 },
-			name = el.name,
-			image;
+	// @param {CKEDITOR.editor} editor
+	// @returns {Function}
+	function upcastWidgetElement( editor ) {
+		var isCenterWrapper = centerWrapperChecker( editor ),
+			captionedClass = editor.config.image2_captionedClass;
 
-		// #11110 Don't initialize on pasted fake objects.
-		if ( el.attributes[ 'data-cke-realelement' ] )
-			return;
+		// @param {CKEDITOR.htmlParser.element} el
+		// @param {Object} data
+		return function( el, data ) {
+			var dimensions = { width: 1, height: 1 },
+				name = el.name,
+				image;
 
-		// If a center wrapper is found. So the element is:
-		// 		<div style="text-align:center"><figure>...</figure></div>.
-		// Centering is done by widget.wrapper in such case. Hence, replace
-		// centering wrapper with figure.
-		// The other case is:
-		// 		<p style="text-align:center"><img></p>.
-		// Then <p> takes charge of <figure> and nothing is to be changed.
-		if ( isCenterWrapper( el ) ) {
-			if ( name == 'div' ) {
-				var figure = el.getFirst( 'figure' );
-				el.replaceWith( figure );
-				el = figure;
+			// #11110 Don't initialize on pasted fake objects.
+			if ( el.attributes[ 'data-cke-realelement' ] )
+				return;
+
+			// If a center wrapper is found. So the element is:
+			// 		<div style="text-align:center"><figure>...</figure></div>.
+			// Centering is done by widget.wrapper in such case. Hence, replace
+			// centering wrapper with figure.
+			// The other case is:
+			// 		<p style="text-align:center"><img></p>.
+			// Then <p> takes charge of <figure> and nothing is to be changed.
+			if ( isCenterWrapper( el ) ) {
+				if ( name == 'div' ) {
+					var figure = el.getFirst( 'figure' );
+					el.replaceWith( figure );
+					el = figure;
+				}
+
+				data.align = 'center';
+
+				image = el.getFirst( 'img' );
 			}
 
-			data.align = 'center';
+			// No center wrapper has been found.
+			else if ( name == 'figure' && el.hasClass( captionedClass ) )
+				image = el.getFirst( 'img' );
 
-			image = el.getFirst( 'img' );
+			// Inline widget from plain img.
+			else if ( name == 'img' )
+				image = el;
+
+			if ( !image )
+				return;
+
+			// If there's an image, then cool, we got a widget.
+			// Now just remove dimension attributes expressed with %.
+			for ( var d in dimensions ) {
+				var dimension = image.attributes[ d ];
+
+				if ( dimension && dimension.match( regexPercent ) )
+					delete image.attributes[ d ];
+			}
+
+			return el;
 		}
-
-		// No center wrapper has been found.
-		else if ( name == 'figure' && el.hasClass( 'caption' ) )
-			image = el.getFirst( 'img' );
-
-		// Inline widget from plain img.
-		else if ( name == 'img' )
-			image = el;
-
-		if ( !image )
-			return;
-
-		// If there's an image, then cool, we got a widget.
-		// Now just remove dimension attributes expressed with %.
-		for ( var d in dimensions ) {
-			var dimension = image.attributes[ d ];
-
-			if ( dimension && dimension.match( regexPercent ) )
-				delete image.attributes[ d ];
-		}
-
-		return el;
 	}
 
 	// Transforms the widget to the external format according to the current configuration.
@@ -608,32 +617,40 @@
 		return el;
 	}
 
-	function isCenterWrapper( el ) {
-		// Wrapper must be either <div> or <p>.
-		if ( !( el.name in { div:1,p:1 } ) )
+	// Returns a function that checks if an element is a centering wrapper.
+	//
+	// @param {CKEDITOR.editor} editor
+	// @returns {Function}
+	function centerWrapperChecker( editor ) {
+		var captionedClass = editor.config.image2_captionedClass;
+
+		return function( el ) {
+			// Wrapper must be either <div> or <p>.
+			if ( !( el.name in { div: 1, p: 1 } ) )
+				return false;
+
+			var children = el.children;
+
+			// Centering wrapper can have only one child.
+			if ( children.length !== 1 )
+				return false;
+
+			var child = children[ 0 ],
+				childName = child.name;
+
+			// The only child of centering wrapper can be <figure> with
+			// class="{config.image2_captionedClass}" or plain <img>.
+			if ( childName != 'img' && !( childName == 'figure' && child.hasClass( captionedClass ) ) )
+				return false;
+
+			var styles = CKEDITOR.tools.parseCssText( el.attributes.style || '', true );
+
+			// Centering wrapper got to be... centering.
+			if ( styles[ 'text-align' ] == 'center' )
+				return true;
+
 			return false;
-
-		var children = el.children;
-
-		// Centering wrapper can have only one child.
-		if ( children.length !== 1 )
-			return false;
-
-		var child = children[ 0 ],
-			childName = child.name;
-
-		// The only child of centering wrapper can be <figure> with
-		// class="caption" or plain <img>.
-		if ( childName != 'img' && !( childName == 'figure' && child.hasClass( 'caption' ) ) )
-			return false;
-
-		var styles = CKEDITOR.tools.parseCssText( el.attributes.style || '', true );
-
-		// Centering wrapper got to be... centering.
-		if ( styles[ 'text-align' ] == 'center' )
-			return true;
-
-		return false;
+		}
 	}
 
 	// Sets width and height of the widget image according to current widget data.
