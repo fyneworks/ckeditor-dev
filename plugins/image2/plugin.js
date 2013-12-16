@@ -38,6 +38,8 @@
 				'float:right' +
 			'}' +
 			'.image{' +
+				// This is to keep the figure consistent while centered
+				// so it doesn't span the entire width of the wrapper.
 				'display:inline-block' +
 			'}' +
 
