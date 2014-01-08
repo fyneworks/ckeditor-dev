@@ -1926,25 +1926,34 @@
 				if ( dataObj.type != 'cke-widget' )
 					return;
 
-				evt.data.preventDefault();
-
 				// Something went wrong... maybe someone is dragging widgets between editors/windows/tabs/browsers/frames.
 				if ( dataObj.editor != editor.name || !( sourceWidget = widgetsRepo.instances[ dataObj.id ] ) )
 					return;
 
-				// Try to determine a DOM position at which drop happened. If none of methods
-				// which we support succeeded abort.
-				range = getRangeAtDropPosition( editor, evt );
-				if ( !range )
-					return;
+				try {
+					// Try to determine a DOM position at which drop happened. If none of methods
+					// which we support succeeded abort.
+					range = getRangeAtDropPosition( editor, evt );
+					evt.data.preventDefault();
+					if ( !range )
+						return;
 
-				// #11132 Hack to prevent cursor loss on Firefox. Without timeout widget is
-				// correctly pasted but then cursor is invisible (although it works) and can be restored
-				// only by blurring editable.
-				if ( CKEDITOR.env.gecko )
-					setTimeout( finalizeNativeDrop, 0, editor, sourceWidget, range );
-				else
-					finalizeNativeDrop( editor, sourceWidget, range );
+					// #11132 Hack to prevent cursor loss on Firefox. Without timeout widget is
+					// correctly pasted but then cursor is invisible (although it works) and can be restored
+					// only by blurring editable.
+					if ( CKEDITOR.env.gecko )
+						setTimeout( finalizeNativeDrop, 0, editor, sourceWidget, range );
+					else
+						finalizeNativeDrop( editor, sourceWidget, range );
+				} catch ( err ) {
+					setTimeout( function() {
+						// editor.fire( 'saveSnapshot' );
+						var range = editor.getSelection().getRanges()[ 0 ];
+						finalizeNativeDrop( editor, sourceWidget, range );
+
+					}, 1, editor, sourceWidget );
+				}
+
 			} );
 
 			// Register Lineutils's utilities as properties of repo.
