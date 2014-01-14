@@ -86,7 +86,7 @@ CKEDITOR.plugins.add( 'menubutton', {
 						newLabel = this.label;
 
 					if ( this._.state == CKEDITOR.TRISTATE_ON )
-						newLabel += ( " " + this._.menu.editor.lang.menubutton.selectedSuffix );
+						newLabel += ( " " + this._.editor.lang.menubutton.selectedSuffix );
 
 					CKEDITOR.document.getById( this._.id + '_label' ).setText( newLabel );
 					return ret;
