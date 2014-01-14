@@ -5,6 +5,7 @@
 
 CKEDITOR.plugins.add( 'menubutton', {
 	requires: 'button,menu',
+	lang: 'en', // %REMOVE_LINE_CORE%
 	onLoad: function() {
 		var clickFn = function( editor ) {
 				var _ = this._,
@@ -76,6 +77,20 @@ CKEDITOR.plugins.add( 'menubutton', {
 				this.hasArrow = true;
 
 				this.click = clickFn;
+			},
+
+			proto: {
+				setState: function( state ) {
+					// Extends setState to update its label element after state has been changed. (#11331)
+					var ret = CKEDITOR.ui.button.prototype.setState.call( this, state ),
+						newLabel = this.label;
+
+					if ( this._.state == CKEDITOR.TRISTATE_ON )
+						newLabel += ( " " + this._.menu.editor.lang.menubutton.selectedSuffix );
+
+					CKEDITOR.document.getById( this._.id + '_label' ).setText( newLabel );
+					return ret;
+				}
 			},
 
 			statics: {

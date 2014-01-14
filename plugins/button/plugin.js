@@ -307,7 +307,8 @@
 					element.setAttribute( 'aria-disabled', true ) :
 					element.removeAttribute( 'aria-disabled' );
 
-				state == CKEDITOR.TRISTATE_ON ?
+				// Note: aria-pressed attribute should not be added to menuButton instances. (#11331)
+				state == CKEDITOR.TRISTATE_ON && !( this instanceof CKEDITOR.ui.menuButton ) ?
 					element.setAttribute( 'aria-pressed', true ) :
 					element.removeAttribute( 'aria-pressed' );
 
