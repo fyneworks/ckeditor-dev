@@ -295,12 +295,13 @@
 		setState: function( state ) {
 			if ( this._.state == state )
 				return false;
-
+			
 			this._.state = state;
 
 			var element = CKEDITOR.document.getById( this._.id );
 
 			if ( element ) {
+				var isMenuButton = CKEDITOR.ui.menuButton && this instanceof CKEDITOR.ui.menuButton;
 				element.setState( state, 'cke_button' );
 
 				state == CKEDITOR.TRISTATE_DISABLED ?
@@ -308,7 +309,7 @@
 					element.removeAttribute( 'aria-disabled' );
 
 				// Note: aria-pressed attribute should not be added to menuButton instances. (#11331)
-				state == CKEDITOR.TRISTATE_ON && !( this instanceof CKEDITOR.ui.menuButton ) ?
+				state == CKEDITOR.TRISTATE_ON && !isMenuButton?
 					element.setAttribute( 'aria-pressed', true ) :
 					element.removeAttribute( 'aria-pressed' );
 
