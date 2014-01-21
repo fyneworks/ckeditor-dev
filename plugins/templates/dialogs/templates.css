@@ -61,15 +61,6 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	cursor: pointer;
 }
 
-/* IE6 contextual selectors childs won't get :hover transition until,
-	the hover style of the link itself contains certain CSS declarations.*/
-.cke_browser_ie6 .cke_tpl_list a:active,
-.cke_browser_ie6 .cke_tpl_list a:hover,
-.cke_browser_ie6 .cke_tpl_list a:focus
-{
-	background-position: 0 0;
-}
-
 .cke_hc .cke_tpl_list a:hover .cke_tpl_item,
 .cke_hc .cke_tpl_list a:focus .cke_tpl_item,
 .cke_hc .cke_tpl_list a:active .cke_tpl_item
