@@ -218,7 +218,7 @@
 				otherContents = otherImage.contents;
 
 			// For IE quirks: Comparing only the protected attribute values but not the original ones.(#4522)
-			if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+			if ( CKEDITOR.env.ieQuirks ) {
 				thisContents = thisContents.replace( protectedAttrs, '' );
 				otherContents = otherContents.replace( protectedAttrs, '' );
 			}

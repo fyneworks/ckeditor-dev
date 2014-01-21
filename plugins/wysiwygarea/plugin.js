@@ -532,7 +532,7 @@
 
 		// IE>=8 stricts mode doesn't have 'contentEditable' in effect
 		// on element unless it has layout. (#5562)
-		if ( CKEDITOR.document.$.documentMode >= 8 ) {
+		if ( !CKEDITOR.env.ieQuirks ) {
 			css.push( 'html.CSS1Compat [contenteditable=false]{min-height:0 !important}' );
 
 			var selectors = [];

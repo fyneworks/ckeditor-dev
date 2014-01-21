@@ -524,7 +524,7 @@
 				// clicking at the region below body (on html element) content, we emulate
 				// the normal behavior on old IEs. (#1659, #7932)
 				if ( doc.$.compatMode != 'BackCompat' ) {
-					if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+					if ( CKEDITOR.env.ieQuirks ) {
 						function moveRangeToPoint( range, x, y ) {
 							// Error prune in IE7. (#9034, #9110)
 							try { range.moveToPoint( x, y ); } catch ( e ) {}

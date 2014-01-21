@@ -26,7 +26,7 @@ CKEDITOR.dialog.add( 'hiddenfield', function( editor ) {
 			var name = this.getValueOf( 'info', '_cke_saved_name' ),
 				value = this.getValueOf( 'info', 'value' ),
 				editor = this.getParentEditor(),
-				element = CKEDITOR.env.ie && CKEDITOR.env.quirks ? editor.document.createElement( '<input name="' + CKEDITOR.tools.htmlEncode( name ) + '">' ) : editor.document.createElement( 'input' );
+				element = CKEDITOR.env.ieQuirks ? editor.document.createElement( '<input name="' + CKEDITOR.tools.htmlEncode( name ) + '">' ) : editor.document.createElement( 'input' );
 
 			element.setAttribute( 'type', 'hidden' );
 			this.commitContent( element );

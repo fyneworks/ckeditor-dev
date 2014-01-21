@@ -5,7 +5,7 @@
 
 ( function() {
 	var pxUnit = CKEDITOR.tools.cssLength,
-		needsIEHacks = CKEDITOR.env.ie && CKEDITOR.env.quirks;
+		needsIEHacks = CKEDITOR.env.ieQuirks;
 
 	function getWidth( el ) {
 		return CKEDITOR.env.ie ? el.$.clientWidth : parseInt( el.getComputedStyle( 'width' ), 10 );

@@ -492,7 +492,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 				return this.$.getAttribute( name, 2 );
 			};
 
-		if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+		if ( CKEDITOR.env.ieQuirks ) {
 			return function( name ) {
 				switch ( name ) {
 					case 'class':
@@ -931,7 +931,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 	 * @method
 	 * @returns {Boolean} True if the element has attributes.
 	 */
-	hasAttributes: CKEDITOR.env.ie && CKEDITOR.env.quirks ?
+	hasAttributes: CKEDITOR.env.ieQuirks ?
 		function() {
 			var attributes = this.$.attributes;
 
@@ -985,7 +985,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 			return !!( $attr && $attr.specified );
 		}
 
-		return ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) ?
+		return CKEDITOR.env.ieQuirks ?
 		function( name ) {
 			// On IE < 8 the name attribute cannot be retrieved
 			// right after the element creation and setting the
@@ -1117,7 +1117,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 				return this;
 			};
 
-		if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+		if ( CKEDITOR.env.ieQuirks ) {
 			return function( name, value ) {
 				if ( name == 'class' )
 					this.$.className = value;
@@ -1194,7 +1194,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 				this.$.removeAttribute( name );
 			};
 
-		if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+		if ( CKEDITOR.env.ieQuirks ) {
 			return function( name ) {
 				if ( name == 'class' )
 					name = 'className';
@@ -1983,7 +1983,7 @@ CKEDITOR.tools.extend( CKEDITOR.dom.element.prototype, {
 	 */
 	CKEDITOR.dom.element.prototype.setSize = function( type, size, isBorderBox ) {
 		if ( typeof size == 'number' ) {
-			if ( isBorderBox && !( CKEDITOR.env.ie && CKEDITOR.env.quirks ) )
+			if ( isBorderBox && !CKEDITOR.env.ieQuirks )
 				size -= marginAndPaddingSize.call( this, type );
 
 			this.setStyle( type, size + 'px' );

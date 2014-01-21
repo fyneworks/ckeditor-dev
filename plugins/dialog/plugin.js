@@ -262,7 +262,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		// Set the startup styles for the dialog, avoiding it enlarging the
 		// page size on the dialog creation.
 		var startStyles = {
-			position: CKEDITOR.env.ie6Compat ? 'absolute' : 'fixed',
+			position: CKEDITOR.env.ieQuirks ? 'absolute' : 'fixed',
 			top: 0,
 			visibility: 'hidden'
 		};
@@ -566,7 +566,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 		// IE6 BUG: Text fields and text areas are only half-rendered the first time the dialog appears in IE6 (#2661).
 		// This is still needed after [2708] and [2709] because text fields in hidden TR tags are still broken.
-		if ( CKEDITOR.env.ie6Compat ) {
+		if ( CKEDITOR.env.ieQuirks ) {
 			this.on( 'load', function( evt ) {
 				var outer = this.getElement(),
 					inner = outer.getFirst();
@@ -897,7 +897,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				posY = ( viewSize.height - dialogSize.height ) / 2;
 
 			// Switch to absolute position when viewport is smaller than dialog size.
-			if ( !CKEDITOR.env.ie6Compat ) {
+			if ( !CKEDITOR.env.ieQuirks ) {
 				if ( dialogSize.height + ( posY > 0 ? posY : 0 ) > viewSize.height ||
 						 dialogSize.width + ( posX > 0 ? posX : 0 ) > viewSize.width )
 					el.setStyle( 'position', 'absolute' );
@@ -1158,7 +1158,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			// [IE] an invisible input[type='text'] will enlarge it's width
 			// if it's value is long when it shows, so we clear it's value
 			// before it shows and then recover it (#5649)
-			if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+			if ( CKEDITOR.env.ieQuirks ) {
 				clearOrRecoverTextInputValue( selected[ 1 ] );
 				selected[ 1 ].show();
 				setTimeout( function() {
@@ -1832,7 +1832,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			CKEDITOR.document.removeListener( 'mousemove', mouseMoveHandler );
 			CKEDITOR.document.removeListener( 'mouseup', mouseUpHandler );
 
-			if ( CKEDITOR.env.ie6Compat ) {
+			if ( CKEDITOR.env.ieQuirks ) {
 				var coverDoc = currentCover.getChild( 0 ).getFrameDocument();
 				coverDoc.removeListener( 'mousemove', mouseMoveHandler );
 				coverDoc.removeListener( 'mouseup', mouseUpHandler );
@@ -1846,7 +1846,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			CKEDITOR.document.on( 'mouseup', mouseUpHandler );
 			abstractDialogCoords = dialog.getPosition();
 
-			if ( CKEDITOR.env.ie6Compat ) {
+			if ( CKEDITOR.env.ieQuirks ) {
 				var coverDoc = currentCover.getChild( 0 ).getFrameDocument();
 				coverDoc.on( 'mousemove', mouseMoveHandler );
 				coverDoc.on( 'mouseup', mouseUpHandler );
@@ -1879,7 +1879,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			}
 
 			// Calculate the offset between content and chrome size.
-			wrapperHeight = startSize.height - dialog.parts.contents.getSize( 'height', !( CKEDITOR.env.gecko || CKEDITOR.env.ie && CKEDITOR.env.quirks ) );
+			wrapperHeight = startSize.height - dialog.parts.contents.getSize( 'height', !( CKEDITOR.env.gecko || CKEDITOR.env.ieQuirks ) );
 			wrapperWidth = startSize.width - dialog.parts.contents.getSize( 'width', 1 );
 
 			origin = { x: $event.screenX, y: $event.screenY };
@@ -1889,7 +1889,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			CKEDITOR.document.on( 'mousemove', mouseMoveHandler );
 			CKEDITOR.document.on( 'mouseup', mouseUpHandler );
 
-			if ( CKEDITOR.env.ie6Compat ) {
+			if ( CKEDITOR.env.ieQuirks ) {
 				var coverDoc = currentCover.getChild( 0 ).getFrameDocument();
 				coverDoc.on( 'mousemove', mouseMoveHandler );
 				coverDoc.on( 'mouseup', mouseUpHandler );
@@ -1962,7 +1962,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				dialogCover = null;
 			}
 
-			if ( CKEDITOR.env.ie6Compat ) {
+			if ( CKEDITOR.env.ieQuirks ) {
 				var coverDoc = currentCover.getChild( 0 ).getFrameDocument();
 				coverDoc.removeListener( 'mouseup', mouseUpHandler );
 				coverDoc.removeListener( 'mousemove', mouseMoveHandler );
@@ -1991,14 +1991,14 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 
 		if ( !coverElement ) {
 			var html = [
-				'<div tabIndex="-1" style="position: ', ( CKEDITOR.env.ie6Compat ? 'absolute' : 'fixed' ),
+				'<div tabIndex="-1" style="position: ', ( CKEDITOR.env.ieQuirks ? 'absolute' : 'fixed' ),
 				'; z-index: ', baseFloatZIndex,
 				'; top: 0px; left: 0px; ',
-				( !CKEDITOR.env.ie6Compat ? 'background-color: ' + backgroundColorStyle : '' ),
+				( !CKEDITOR.env.ieQuirks ? 'background-color: ' + backgroundColorStyle : '' ),
 				'" class="cke_dialog_background_cover">'
 				];
 
-			if ( CKEDITOR.env.ie6Compat ) {
+			if ( CKEDITOR.env.ieQuirks ) {
 				// Support for custom document.domain in IE.
 				var iframeHtml = '<html><body style=\\\'background-color:' + backgroundColorStyle + ';\\\'></body></html>';
 
@@ -2076,7 +2076,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		if ( !( CKEDITOR.env.mac && CKEDITOR.env.webkit ) )
 			coverElement.focus();
 
-		if ( CKEDITOR.env.ie6Compat ) {
+		if ( CKEDITOR.env.ieQuirks ) {
 			// IE BUG: win.$.onscroll assignment doesn't work.. it must be window.onscroll.
 			// So we need to invent a really funny way to make it work.
 			var myScrollHandler = function() {
@@ -2101,7 +2101,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 		currentCover.hide();
 		win.removeListener( 'resize', resizeCover );
 
-		if ( CKEDITOR.env.ie6Compat ) {
+		if ( CKEDITOR.env.ieQuirks ) {
 			win.$.setTimeout( function() {
 				var prevScrollHandler = window.onscroll && window.onscroll.prevScrollHandler;
 				window.onscroll = prevScrollHandler || null;
@@ -2343,7 +2343,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				dialog.on( 'load', function() {
 					var input = me.getInputElement();
 					if ( input ) {
-						var focusClass = me.type in { 'checkbox': 1, 'ratio': 1 } && CKEDITOR.env.ie && CKEDITOR.env.quirks ? 'cke_dialog_ui_focused' : '';
+						var focusClass = me.type in { 'checkbox': 1, 'ratio': 1 } && CKEDITOR.env.ieQuirks ? 'cke_dialog_ui_focused' : '';
 						input.on( 'focus', function() {
 							dialog._.tabBarMode = false;
 							dialog._.hasFocus = true;
@@ -2428,7 +2428,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 							if ( elementDefinition && elementDefinition.padding != undefined )
 								styles.push( 'padding:' + cssLength( elementDefinition.padding ) );
 							// In IE Quirks alignment has to be done on table cells. (#7324)
-							if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align )
+							if ( CKEDITOR.env.ieQuirks && children[ i ].align )
 								styles.push( 'text-align:' + children[ i ].align );
 							if ( styles.length > 0 )
 								html.push( 'style="' + styles.join( '; ' ) + '" ' );
@@ -2505,7 +2505,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 							if ( elementDefinition && elementDefinition.padding != undefined )
 								styles.push( 'padding:' + cssLength( elementDefinition.padding ) );
 							// In IE Quirks alignment has to be done on table cells. (#7324)
-							if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && children[ i ].align )
+							if ( CKEDITOR.env.ieQuirks && children[ i ].align )
 								styles.push( 'text-align:' + children[ i ].align );
 							if ( styles.length > 0 )
 								html.push( 'style="', styles.join( '; ' ), '" ' );

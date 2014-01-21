@@ -120,7 +120,7 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
 		'<div>' +
 		'<span id="' + labelId + '" class="cke_voice_label">' + lang.options + '</span>',
 		'<table role="listbox" aria-labelledby="' + labelId + '" style="width:100%;height:100%;border-collapse:separate;" cellspacing="2" cellpadding="2"',
-		CKEDITOR.env.ie && CKEDITOR.env.quirks ? ' style="position:absolute;"' : '',
+		CKEDITOR.env.ieQuirks ? ' style="position:absolute;"' : '',
 		'><tbody>'
 		];
 

@@ -37,7 +37,7 @@
 			var html = '<table style="width:350px;" class="cke_tpl_preview" role="presentation"><tr>';
 
 			if ( template.image && imagesPath )
-				html += '<td class="cke_tpl_preview_img"><img src="' + CKEDITOR.getUrl( imagesPath + template.image ) + '"' + ( CKEDITOR.env.ie6Compat ? ' onload="this.width=this.width"' : '' ) + ' alt="" title=""></td>';
+				html += '<td class="cke_tpl_preview_img"><img src="' + CKEDITOR.getUrl( imagesPath + template.image ) + '"' + ( CKEDITOR.env.ieQuirks ? ' onload="this.width=this.width"' : '' ) + ' alt="" title=""></td>';
 
 			html += '<td style="white-space:normal;"><span class="cke_tpl_title">' + template.title + '</span><br/>';
 

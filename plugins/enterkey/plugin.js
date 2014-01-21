@@ -435,7 +435,7 @@
 				var lineBreak;
 
 				// IE<8 prefers text node as line-break inside of <pre> (#4711).
-				if ( startBlockTag == 'pre' && CKEDITOR.env.ie && CKEDITOR.env.quirks )
+				if ( startBlockTag == 'pre' && CKEDITOR.env.ieQuirks )
 					lineBreak = doc.createText( '\r' );
 				else
 					lineBreak = doc.createElement( 'br' );

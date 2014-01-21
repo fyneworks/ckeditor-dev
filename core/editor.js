@@ -40,7 +40,7 @@
 			else if ( !mode )
 				throw new Error( 'One of the element modes must be specified.' );
 
-			if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && mode == CKEDITOR.ELEMENT_MODE_INLINE )
+			if ( CKEDITOR.env.ieQuirks && mode == CKEDITOR.ELEMENT_MODE_INLINE )
 				throw new Error( 'Inline element mode is not supported on IE quirks.' );
 
 			if ( !isSupportedElement( element, mode ) )

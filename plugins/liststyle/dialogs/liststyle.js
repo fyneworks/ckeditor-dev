@@ -95,7 +95,7 @@
 				[ lang.decimal, 'decimal' ]
 				];
 
-			if ( !( CKEDITOR.env.ie && CKEDITOR.env.quirks ) ) {
+			if ( !CKEDITOR.env.ieQuirks ) {
 				listStyleOptions.concat( [
 					[ lang.armenian, 'armenian' ],
 					[ lang.decimalLeadingZero, 'decimal-leading-zero' ],

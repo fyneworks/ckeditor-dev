@@ -37,7 +37,7 @@
 				cssTemplate =
 			// TODO: For IE6, we don't have child selector support,
 			// where nested table cells could be incorrect.
-			( CKEDITOR.env.ie6Compat ? [
+			( CKEDITOR.env.ieQuirks ? [
 				'.%1 table.%2,',
 					'.%1 table.%2 td, .%1 table.%2 th',
 					'{',

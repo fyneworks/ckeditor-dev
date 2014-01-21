@@ -9,7 +9,7 @@ CKEDITOR.plugins.add( 'uicolor', {
 	icons: 'uicolor', // %REMOVE_LINE_CORE%
 	hidpi: true, // %REMOVE_LINE_CORE%
 	init: function( editor ) {
-		if ( CKEDITOR.env.ie6Compat )
+		if ( CKEDITOR.env.ieQuirks )
 			return;
 
 		editor.addCommand( 'uicolor', new CKEDITOR.dialogCommand( 'uicolor' ) );

@@ -17,7 +17,7 @@ CKEDITOR.dialog.add( 'paste', function( editor ) {
 
 		// IE before version 8 will leave cursor blinking inside the document after
 		// editor blurred unless we clean up the selection. (#4716)
-		if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+		if ( CKEDITOR.env.ieQuirks ) {
 			doc.getWindow().on( 'blur', function() {
 				doc.$.selection.empty();
 			} );
@@ -61,7 +61,7 @@ CKEDITOR.dialog.add( 'paste', function( editor ) {
 	return {
 		title: lang.title,
 
-		minWidth: CKEDITOR.env.ie && CKEDITOR.env.quirks ? 370 : 350,
+		minWidth: CKEDITOR.env.ieQuirks ? 370 : 350,
 		minHeight: CKEDITOR.env.quirks ? 250 : 245,
 		onShow: function() {
 			// FIREFOX BUG: Force the browser to render the dialog to make the to-be-
@@ -77,7 +77,7 @@ CKEDITOR.dialog.add( 'paste', function( editor ) {
 		},
 
 		onLoad: function() {
-			if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && editor.lang.dir == 'rtl' )
+			if ( CKEDITOR.env.ieQuirks && editor.lang.dir == 'rtl' )
 				this.parts.contents.setStyle( 'overflow', 'hidden' );
 		},
 

@@ -174,6 +174,14 @@ if ( !CKEDITOR.env ) {
 			else
 				version = document.documentMode;
 
+			/**
+			 * Indicates that CKEditor is running in IE in {@link #quirks Quirks Mode}.
+			 *
+			 * @since 4.4
+			 * @property {Boolean} ieQuirks
+			 */
+			env.ieQuirks = env.quirks;
+
 			// Deprecated features available just for backwards compatibility.
 			env.ie9Compat = version == 9;
 			env.ie8Compat = version == 8;

@@ -242,7 +242,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 							// Account for extra height needed due to IE quirks box model bug:
 							// http://en.wikipedia.org/wiki/Internet_Explorer_box_model_bug
 							// (#3426)
-							if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && width > 0 )
+							if ( CKEDITOR.env.ieQuirks && width > 0 )
 								width += ( target.$.offsetWidth || 0 ) - ( target.$.clientWidth || 0 ) + 3;
 
 							// Add some extra pixels to improve the appearance.
@@ -255,7 +255,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 							// Account for extra height needed due to IE quirks box model bug:
 							// http://en.wikipedia.org/wiki/Internet_Explorer_box_model_bug
 							// (#3426)
-							if ( CKEDITOR.env.ie && CKEDITOR.env.quirks && height > 0 )
+							if ( CKEDITOR.env.ieQuirks && height > 0 )
 								height += ( target.$.offsetHeight || 0 ) - ( target.$.clientHeight || 0 ) + 3;
 
 							target.setStyle( 'height', height + 'px' );
@@ -504,7 +504,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 				this.blur();
 
 				/* #3767 IE: Second level menu may not have borders */
-				if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
+				if ( CKEDITOR.env.ieQuirks ) {
 					setTimeout( function() {
 						panel.element.getChild( 0 ).$.style.cssText += '';
 					}, 100 );
