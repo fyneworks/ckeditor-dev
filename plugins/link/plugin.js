@@ -286,7 +286,7 @@ CKEDITOR.plugins.link = {
 	 * @readonly
 	 * @property {Boolean}
 	 */
-	emptyAnchorFix: CKEDITOR.env.ie && CKEDITOR.env.version < 8,
+	emptyAnchorFix: CKEDITOR.env.ie && CKEDITOR.env.quirks,
 
 	/**
 	 * @param {CKEDITOR.editor} editor

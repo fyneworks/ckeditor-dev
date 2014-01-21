@@ -26,7 +26,7 @@ CKEDITOR.dialog.add( 'mathjax', function( editor ) {
 						onLoad: function( widget ) {
 							var that = this;
 
-							if ( !( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) ) {
+							if ( !( CKEDITOR.env.ie && CKEDITOR.env.version < 9 ) ) {
 								this.getInputElement().on( 'keyup', function() {
 									// Add \( and \) for preview.
 									preview.setValue( '\\(' + that.getInputElement().getValue() + '\\)' );
@@ -54,7 +54,7 @@ CKEDITOR.dialog.add( 'mathjax', function( editor ) {
 								'</a>' +
 							'</div>'
 					},
-					( !( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) ) && {
+					( !( CKEDITOR.env.ie && CKEDITOR.env.version < 9 ) ) && {
 						id: 'preview',
 						type: 'html',
 						html:

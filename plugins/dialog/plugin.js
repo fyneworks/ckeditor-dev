@@ -160,7 +160,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			close = body.getChild( 1 );
 
 		// IFrame shim for dialog that masks activeX in IE. (#7619)
-		if ( CKEDITOR.env.ie && !CKEDITOR.env.ie6Compat ) {
+		if ( CKEDITOR.env.ie && !CKEDITOR.env.quirks ) {
 			var src = 'javascript:void(function(){' + encodeURIComponent( 'document.open();(' + CKEDITOR.tools.fixDomain + ')();document.close();' ) + '}())',
 				iframe = CKEDITOR.dom.element.createFromHtml( '<iframe' +
 					' frameBorder="0"' +
@@ -1158,7 +1158,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 			// [IE] an invisible input[type='text'] will enlarge it's width
 			// if it's value is long when it shows, so we clear it's value
 			// before it shows and then recover it (#5649)
-			if ( CKEDITOR.env.ie6Compat || CKEDITOR.env.ie7Compat ) {
+			if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
 				clearOrRecoverTextInputValue( selected[ 1 ] );
 				selected[ 1 ].show();
 				setTimeout( function() {
@@ -2343,7 +2343,7 @@ CKEDITOR.DIALOG_RESIZE_BOTH = 3;
 				dialog.on( 'load', function() {
 					var input = me.getInputElement();
 					if ( input ) {
-						var focusClass = me.type in { 'checkbox': 1, 'ratio': 1 } && CKEDITOR.env.ie && CKEDITOR.env.version < 8 ? 'cke_dialog_ui_focused' : '';
+						var focusClass = me.type in { 'checkbox': 1, 'ratio': 1 } && CKEDITOR.env.ie && CKEDITOR.env.quirks ? 'cke_dialog_ui_focused' : '';
 						input.on( 'focus', function() {
 							dialog._.tabBarMode = false;
 							dialog._.hasFocus = true;

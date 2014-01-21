@@ -216,7 +216,7 @@
 	 * @param {CKEDITOR.dom.element} iFrame The `iframe` element to be wrapped.
 	 * @param {CKEDITOR.editor} editor The editor instance.
 	 */
-	if ( !( CKEDITOR.env.ie && CKEDITOR.env.version == 8 ) ) {
+	if ( !( CKEDITOR.env.ie && CKEDITOR.env.version < 9 ) ) {
 		CKEDITOR.plugins.mathjax.frameWrapper = function( iFrame, editor ) {
 
 			var buffer, preview, value, newValue,

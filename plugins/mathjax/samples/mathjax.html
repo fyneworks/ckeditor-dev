@@ -63,7 +63,7 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 			height: 350
 		} );
 
-		if ( CKEDITOR.env.ie && CKEDITOR.env.version == 8 )
+		if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 )
 			document.getElementById( 'ie8-warning' ).className = 'warning';
 
 	</script>

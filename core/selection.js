@@ -524,7 +524,7 @@
 				// clicking at the region below body (on html element) content, we emulate
 				// the normal behavior on old IEs. (#1659, #7932)
 				if ( doc.$.compatMode != 'BackCompat' ) {
-					if ( CKEDITOR.env.ie7Compat || CKEDITOR.env.ie6Compat ) {
+					if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
 						function moveRangeToPoint( range, x, y ) {
 							// Error prune in IE7. (#9034, #9110)
 							try { range.moveToPoint( x, y ); } catch ( e ) {}
@@ -586,9 +586,9 @@
 						} );
 					}
 
-					// It's much simpler for IE8+, we just need to reselect the reported range.
+					// It's much simpler for IE<11, we just need to reselect the reported range.
 					// This hack does not work on IE>=11 because there's no old selection&range APIs.
-					if ( CKEDITOR.env.version > 7 && CKEDITOR.env.version < 11 ) {
+					if ( CKEDITOR.env.version < 11 ) {
 						html.on( 'mousedown', function( evt ) {
 							if ( evt.data.getTarget().is( 'html' ) ) {
 								// Limit the text selection mouse move inside of editable. (#9715)

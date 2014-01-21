@@ -504,7 +504,7 @@ CKEDITOR.plugins.add( 'floatpanel', {
 				this.blur();
 
 				/* #3767 IE: Second level menu may not have borders */
-				if ( CKEDITOR.env.ie7Compat || CKEDITOR.env.ie6Compat ) {
+				if ( CKEDITOR.env.ie && CKEDITOR.env.quirks ) {
 					setTimeout( function() {
 						panel.element.getChild( 0 ).$.style.cssText += '';
 					}, 100 );
