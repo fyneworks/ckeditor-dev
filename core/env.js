@@ -263,7 +263,7 @@ if ( !CKEDITOR.env ) {
 			// White list of mobile devices that CKEditor supports.
 			env.iOS && version >= 534 ||
 			!env.mobile && (
-				( env.ie && version > 6 ) ||
+				( env.ie && version > 7 ) ||
 				( env.gecko && version >= 20000 ) ||
 				( env.air && version >= 1 ) ||
 				( env.webkit && version >= 522 ) ||
