@@ -86,6 +86,8 @@
 		}
 	} );
 
+	var ieClipboardRegex = /<a href="(.+)">.+<\/a>/i;
+
 	function matchProvider( url ) {
 		var provider, patterns, i, j;
 
@@ -101,6 +103,14 @@
 	}
 
 	function extractUrlFromPaste( html ) {
+
+		if ( CKEDITOR.env.ie ) {
+			// Ie wrapps it inside a link.
+			var ieMatch = html.match( ieClipboardRegex );
+			if ( ieMatch )
+				html = ieMatch[ 1 ];
+		}
+
 		return html;
 	}
 
