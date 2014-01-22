@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+-->
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>DrupalImageCaption</title>
+	<script src="../../../ckeditor.js"></script>
+	<link href="../../../samples/sample.css" rel="stylesheet">
+</head>
+<body>
+	<h1 class="samples">
+		<a href="../../../samples/index.html">CKEditor Samples</a> &raquo; DrupalImageCaption
+	</h1>
+
+	<textarea id="editor1" cols="10" rows="10">
+		<img src="../../image2/assets/image1.jpg" alt="captioned#1" data-caption="1"  />
+		<img src="../../image2/assets/image2.jpg" alt="captioned#2" data-caption="1"  />
+		<img src="../../image2/assets/image2.jpg" alt="non-captioned"  />
+	</textarea>
+
+	<script>
+
+		CKEDITOR.replace( 'editor1', {
+			extraPlugins: 'drupalimagecaption',
+			allowedContent: true,
+			height: 450
+		} );
+
+	</script>
+
+	<div id="footer">
+		<hr>
+		<p>
+			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2014, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
+</html>
