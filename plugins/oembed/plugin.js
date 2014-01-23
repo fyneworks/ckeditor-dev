@@ -23,13 +23,12 @@
 			var oembedProviderUrl = new CKEDITOR.template(
 					editor.config.oembedProviderUrl ||
 					'//noembed.com/embed?nowrap=on&url={url}&callback={callback}'
-				);
+				),
+				outputStrategy = editor.config.oembed_output || 'default';
 
 			CKEDITOR.dialog.add( 'oembed', this.path + 'dialogs/oembed.js' );
 
-			editor.widgets.add( 'oembed', {
-				allowedContent: 'oembed',
-				requiredContent: 'oembed',
+			var widgetDefinition = {
 				mask: true,
 				dialog: 'oembed',
 				button: 'Insert oembed',
@@ -52,8 +51,31 @@
 
 					script.setAttribute( 'src' , scriptSrc );
 					CKEDITOR.document.getBody().append( script );
-				},
+				}
+			};
 
+			// Override widget definition with current strategy members.
+			CKEDITOR.tools.extend( widgetDefinition, outputStrategies[ outputStrategy ], true );
+			editor.widgets.add( 'oembed', widgetDefinition );
+
+			editor.on( 'paste', function( evt ) {
+				var data = evt.data.dataValue,
+					url = extractUrlFromPaste( data ),
+					provider = url && matchProvider( url );
+
+				if ( !provider )
+					return;
+
+				evt.data.dataValue = pasteDecorator[ outputStrategy ]( url );
+			} );
+		}
+	} );
+
+	// outputStrategies basically contains widget definitions, indexed by strategy name.
+	var outputStrategies = {
+			oembed: {
+				allowedContent: 'oembed',
+				requiredContent: 'oembed',
 				upcast: function( element, data ) {
 					if ( element.name != 'oembed' )
 						return;
@@ -67,26 +89,38 @@
 						return div;
 					}
 				},
-
 				downcast: function() {
 					return new CKEDITOR.htmlParser.fragment.fromHtml( this.data.url, 'oembed' );
 				}
-			} );
+			},
+			'default': {
+				allowedContent: 'div[data-oembed-url]',
+				requiredContent: 'div[data-oembed-url]',
+				upcast: function( element, data ) {
+					if ( element.name != 'div' || !element.attributes[ 'data-oembed-url' ] )
+						return;
 
-			editor.on( 'paste', function( evt ) {
-				var data = evt.data.dataValue,
-					url = extractUrlFromPaste( data ),
-					provider = url && matchProvider( url );
-
-				if ( !provider )
-					return;
-
-				evt.data.dataValue = '<oembed>' + CKEDITOR.tools.htmlEncode( url ) + '</oembed>';
-			} );
-		}
-	} );
-
-	var ieClipboardRegex = /<a href="(.+)">.+<\/a>/i;
+					data.url = element.attributes[ 'data-oembed-url' ];
+					var ret = new CKEDITOR.htmlParser.element( 'div' );
+					element.replaceWith( ret );
+					return ret;
+				},
+				downcast: function() {
+					var ret = new CKEDITOR.htmlParser.fragment.fromHtml( this.element.getHtml(), 'div' );
+					ret.attributes[ 'data-oembed-url' ] = this.data.url;
+					return ret;
+				}
+			}
+		},
+		pasteDecorator = {
+			oembed: function( url ) {
+				return '<oembed>' + CKEDITOR.tools.htmlEncode( url ) + '</oembed>';
+			},
+			'default': function( url ) {
+				return '<div data-oembed-url="'+ url +'"></div>';
+			}
+		},
+		ieClipboardRegex = /<a href="(.+)">.+<\/a>/i;
 
 	function matchProvider( url ) {
 		var provider, patterns, i, j;
