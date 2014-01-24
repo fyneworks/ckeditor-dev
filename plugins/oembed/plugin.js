@@ -35,6 +35,12 @@
 				template: '<div></div>',
 
 				data: function() {
+
+					// In some cases we can skip reloading the content if it's already there.
+					if ( this.data.skipReload ) {
+						return;
+					}
+
 					var that = this;
 
 					CKEDITOR._.oembedCallbacks.push( function( result ) {
@@ -100,8 +106,18 @@
 					if ( element.name != 'div' || !element.attributes[ 'data-oembed-url' ] )
 						return;
 
+					var children = element.children,
+						ret;
 					data.url = element.attributes[ 'data-oembed-url' ];
-					var ret = new CKEDITOR.htmlParser.element( 'div' );
+
+					// If element has at least child, and we need to ensure that it's not a whitespace text node.
+					if ( children.length && ( children[0].type != CKEDITOR.NODE_TEXT || CKEDITOR.tools.trim( children[0].value ) ) ) {
+						// Reloading oembed content may be skipped.
+						data.skipReload = 1;
+						return element;
+					}
+
+					ret = new CKEDITOR.htmlParser.element( 'div' );
 					element.replaceWith( ret );
 					return ret;
 				},
