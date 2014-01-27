@@ -25,6 +25,7 @@
 					editor.config.oembedProviderUrl ||
 					'//noembed.com/embed?nowrap=on&url={url}&callback={callback}'
 				),
+				loadingImageUrl = this.path + 'images/loader.gif',
 				outputStrategy = editor.config.oembed_output || 'default';
 
 			CKEDITOR.dialog.add( 'oembed', this.path + 'dialogs/oembed.js' );
@@ -43,6 +44,9 @@
 					}
 
 					var that = this;
+
+					// Insert loading icon.
+					this.element.setHtml( '<img src="' + loadingImageUrl + '" />' );
 
 					CKEDITOR._.oembedCallbacks.push( function( result ) {
 						editor.fire( 'lockSnapshot' );
