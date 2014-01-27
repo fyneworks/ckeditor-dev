@@ -6,8 +6,10 @@
 'use strict';
 
 CKEDITOR.dialog.add( 'oembed', function( editor ) {
+	var lang = editor.lang.oembed;
+
 	return {
-		title: 'oEmbed',
+		title: lang.title,
 		minWidth: 350,
 		minHeight: 50,
 		contents: [
@@ -17,7 +19,7 @@ CKEDITOR.dialog.add( 'oembed', function( editor ) {
 					{
 						type: 'text',
 						id: 'url',
-						label: 'URL',
+						label: lang.url,
 						setup: function( widget ) {
 							this.setValue( widget.data.url );
 						},
