@@ -12,6 +12,7 @@
 
 	CKEDITOR.plugins.add( 'oembed', {
 		requires: 'widget,dialog',
+		lang: 'en', // %REMOVE_LINE_CORE%
 
 		onLoad: function() {
 			CKEDITOR._.oembedCallbacks = [];
@@ -31,7 +32,7 @@
 			var widgetDefinition = {
 				mask: true,
 				dialog: 'oembed',
-				button: 'Insert oembed',
+				button: editor.lang.oembed.button,
 				template: '<div></div>',
 
 				data: function() {
