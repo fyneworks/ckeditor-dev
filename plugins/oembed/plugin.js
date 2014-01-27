@@ -172,7 +172,7 @@
 			patterns = provider.patterns;
 
 			for ( j = 0; j < patterns.length; ++j )
-				patterns[ j ] = new RegExp( '^' + patterns[ j ] + '$' );
+				patterns[ j ] = new RegExp( '^' + patterns[ j ] );
 		}
 	}
 
