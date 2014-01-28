@@ -6,7 +6,8 @@
 'use strict';
 
 CKEDITOR.dialog.add( 'mediaembed', function( editor ) {
-	var lang = editor.lang.mediaembed;
+	var lang = editor.lang.mediaembed,
+		pluginNamespace = CKEDITOR.plugins.mediaembed;
 
 	return {
 		title: lang.title,
@@ -23,6 +24,9 @@ CKEDITOR.dialog.add( 'mediaembed', function( editor ) {
 						setup: function( widget ) {
 							this.setValue( widget.data.url );
 						},
+						validate: CKEDITOR.dialog.validate.functions( function( val ) {
+							return !!pluginNamespace.getProviderByUrl( val );
+						}, lang.invalidUrl ),
 						commit: function( widget ) {
 							widget.setData( 'url', this.getValue() );
 						}
