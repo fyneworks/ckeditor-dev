@@ -5,8 +5,8 @@
 
 'use strict';
 
-CKEDITOR.dialog.add( 'oembed', function( editor ) {
-	var lang = editor.lang.oembed;
+CKEDITOR.dialog.add( 'mediaembed', function( editor ) {
+	var lang = editor.lang.mediaembed;
 
 	return {
 		title: lang.title,
