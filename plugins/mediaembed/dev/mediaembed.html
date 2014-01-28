@@ -6,13 +6,13 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>oEmbed! &ndash; CKEditor Sample</title>
+	<title>Media Embed &ndash; CKEditor Sample</title>
 	<script src="../../../ckeditor.js"></script>
 	<link href="../../../samples/sample.css" rel="stylesheet">
 </head>
 <body>
 	<h1 class="samples">
-		CKEditor Sample &mdash; oEmbed
+		CKEditor Sample &mdash; Media Embed
 	</h1>
 	<div>
 		Output strategy:
@@ -129,8 +129,8 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
 			editor = CKEDITOR.replace( 'editor1', {
 				allowedContent: true,
-				extraPlugins: 'oembed',
-				oembed_output: stratPicker.value,
+				extraPlugins: 'mediaembed',
+				mediaembed_output: stratPicker.value,
 				height: 500,
 				on: {
 					instanceReady: function( evt ) {
