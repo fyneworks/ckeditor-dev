@@ -24,7 +24,7 @@
 			config.mediaembed_providersWhitelist = ( config.mediaembed_providersWhitelist && config.mediaembed_providersWhitelist.split( ',' ) ) || [];
 
 			var oembedProviderUrl = new CKEDITOR.template(
-					editor.config.oembedProviderUrl ||
+					editor.config.mediaembed_url ||
 					'//noembed.com/embed?nowrap=on&url={url}&callback={callback}'
 				),
 				loadingImageUrl = this.path + 'images/loader.gif',
@@ -234,6 +234,18 @@
 	 *  If setting is not set, default list of providers will be applied.
 	 *
 	 * @cfg {Array} [mediaembed_providers]
+	 * @member CKEDITOR.config
+	 */
+
+	/**
+	 * Url to oembed service. When url is matched positively against any provider regexp, plugin will
+	 * query given url for oembed content.
+	 *
+	 * Template parameters:
+	 *
+	 * * **url** - matched media content url
+	 * * **callback** - name of function which needs to be called by returned javascript content
+	 * @cfg {String} [mediaembed_url='//noembed.com/embed?nowrap=on&url={url}&callback={callback}']
 	 * @member CKEDITOR.config
 	 */
 
