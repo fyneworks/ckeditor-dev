@@ -25,7 +25,7 @@ CKEDITOR.dialog.add( 'mediaembed', function( editor ) {
 							this.setValue( widget.data.url );
 						},
 						validate: CKEDITOR.dialog.validate.functions( function( val ) {
-							return !!pluginNamespace.getProviderByUrl( val );
+							return !!pluginNamespace.getProviderByUrl( val, editor );
 						}, lang.invalidUrl ),
 						commit: function( widget ) {
 							widget.setData( 'url', this.getValue() );
