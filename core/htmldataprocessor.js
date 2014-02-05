@@ -540,6 +540,12 @@
 		}
 	};
 
+	if ( CKEDITOR.env.webkit || CKEDITOR.env.ie ) {
+		defaultDataFilterRulesEditableOnly.elements.iframe = function( el ) {
+			el.setHtml( el.getHtml().replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' ).replace( /&amp;/g, '&' ) );
+		};
+	}
+
 	// These rules will also be applied to non-editable content.
 	var defaultDataFilterRulesForAll = {
 		attributeNames: [
