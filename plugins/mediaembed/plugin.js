@@ -89,6 +89,20 @@
 
 				evt.data.dataValue = publicNamespace.pasteDecorator[ outputStrategy ]( url );
 			} );
+
+			this.addCss( editor, this.path + (config.mediaembed_styles || 'styles/combined_gist.min.css') );
+		},
+
+		// Adds css file path to config.contentsCss. This funciton should be introduced in #11532.
+		addCss: function( editor, cssPath ) {
+			var cfg = editor.config,
+				curContentsCss = cfg.contentsCss;
+
+			// Convert current value into array.
+			if ( !CKEDITOR.tools.isArray( curContentsCss ) )
+				cfg.contentsCss = !curContentsCss ? [] : [ curContentsCss ];
+
+			cfg.contentsCss.push( cssPath );
 		}
 	} );
 
@@ -238,7 +252,15 @@
 
 	/**
 	 * Comma separated string, specifying names of allowed providers.
+	 *
 	 * @cfg {String} [mediaembed_providersWhitelist="Twitter,Vimeo,YouTube"]
+	 * @member CKEDITOR.config
+	 */
+
+	/**
+	 * Path to stylesheet with css to style mediaembed content, relative to plugin directory.
+	 *
+	 * @cfg {String} [mediaembed_styles="styles/combined_gist.css"]
 	 * @member CKEDITOR.config
 	 */
 
