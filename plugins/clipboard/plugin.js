@@ -497,6 +497,56 @@
 			} );
 
 			editable.on( 'keyup', setToolbarStates );
+
+			var editable = editor.editable(),
+				// #11123 Firefox needs to listen on document, because otherwise event won't be fired.
+				// #11086 IE8 cannot listen on document.
+				dropTarget = ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 ) || editable.isInline() ? editable : editor.document,
+				clipboard, dragBookmarks, dragTimestamp;
+
+			editable.attachListener( dropTarget, 'dragstart', function( evt ) {
+				console.log( 'dragstart' );
+
+				dragTimestamp = 'cke-' + ( new Date() ).getTime();
+				clipboard = editor.getSelection().getSelectedHtml();
+				dragBookmarks = editor.getSelection().createBookmarks2(); // createBookmarks2 ?
+
+				evt.data.$.dataTransfer.setData( 'text', dragTimestamp );
+			} );
+
+			editable.attachListener( dropTarget, 'drop', function( evt ) {
+				console.log( 'drop' );
+
+				if ( evt.data.$.dataTransfer.getData( 'text' ) == dragTimestamp ) {
+					var range = editor.createRange(),
+						dropBookmark;
+
+					// Change bookmarks type
+					editor.getSelection().selectBookmarks( dragBookmarks );
+					dragBookmarks = editor.getSelection().createBookmarks();
+
+					// editor.focus(); // do we need this?
+					range = getRangeAtDropPosition( editor, evt );
+
+					if ( range ) {
+						dropBookmark = range.createBookmark();
+
+						editor.getSelection().selectBookmarks( dragBookmarks );
+						var ranges = editor.getSelection().getRanges();
+						for ( var i = 0; i < ranges.length; i++ ) {
+							ranges[ i ].deleteContents();
+						};
+
+						range = editor.createRange();
+						range.moveToBookmark( dropBookmark );
+						range.select();
+						firePasteEvents( 'html', clipboard );
+					}
+				}
+
+				evt.data.preventDefault();
+			} );
+
 		}
 
 		// Create object representing Cut or Copy commands.
@@ -1197,6 +1247,7 @@
 		else if ( document.body.createTextRange ) {
 			$range = editor.document.getBody().$.createTextRange();
 			$range.moveToPoint( $evt.clientX, $evt.clientY );
+
 			var id = 'cke-temp-' + ( new Date() ).getTime();
 			$range.pasteHTML( '<span id="' + id + '">\u200b</span>' );
 
