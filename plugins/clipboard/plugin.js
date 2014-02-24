@@ -505,18 +505,14 @@
 				clipboard, dragBookmarks, dragTimestamp;
 
 			editable.attachListener( dropTarget, 'dragstart', function( evt ) {
-				console.log( 'dragstart' );
-
 				dragTimestamp = 'cke-' + ( new Date() ).getTime();
 				clipboard = editor.getSelection().getSelectedHtml();
-				dragBookmarks = editor.getSelection().createBookmarks2(); // createBookmarks2 ?
+				dragBookmarks = editor.getSelection().createBookmarks2();
 
 				evt.data.$.dataTransfer.setData( 'text', dragTimestamp );
 			} );
 
 			editable.attachListener( dropTarget, 'drop', function( evt ) {
-				console.log( 'drop' );
-
 				if ( evt.data.$.dataTransfer.getData( 'text' ) == dragTimestamp ) {
 					var range = editor.createRange(),
 						dropBookmark;
@@ -528,12 +524,14 @@
 						editor.fire( 'saveSnapshot' );
 						editor.fire( 'lockSnapshot', { dontUpdate: 1 } );
 
-						// Change bookmarks type
+						// Change drag bookmarks type.
 						editor.getSelection().selectBookmarks( dragBookmarks );
 						dragBookmarks = editor.getSelection().createBookmarks();
 
+						// Create drop bookmark.
 						dropBookmark = range.createBookmark();
 
+						// Delete content for the drag position.
 						editor.getSelection().selectBookmarks( dragBookmarks );
 						var ranges = editor.getSelection().getRanges();
 
@@ -541,10 +539,12 @@
 							ranges[ i ].deleteContents();
 						};
 
+						// Paste content into the drop position.
 						range = editor.createRange();
 						range.moveToBookmark( dropBookmark );
 						range.select();
 						firePasteEvents( 'html', clipboard );
+
 						editor.fire( 'unlockSnapshot' );
 					}
 				}
