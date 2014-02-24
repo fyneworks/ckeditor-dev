@@ -521,18 +521,22 @@
 					var range = editor.createRange(),
 						dropBookmark;
 
-					// Change bookmarks type
-					editor.getSelection().selectBookmarks( dragBookmarks );
-					dragBookmarks = editor.getSelection().createBookmarks();
-
 					// editor.focus(); // do we need this?
 					range = getRangeAtDropPosition( editor, evt );
 
 					if ( range ) {
+						editor.fire( 'saveSnapshot' );
+						editor.fire( 'lockSnapshot', { dontUpdate: 1 } );
+
+						// Change bookmarks type
+						editor.getSelection().selectBookmarks( dragBookmarks );
+						dragBookmarks = editor.getSelection().createBookmarks();
+
 						dropBookmark = range.createBookmark();
 
 						editor.getSelection().selectBookmarks( dragBookmarks );
 						var ranges = editor.getSelection().getRanges();
+
 						for ( var i = 0; i < ranges.length; i++ ) {
 							ranges[ i ].deleteContents();
 						};
@@ -541,6 +545,7 @@
 						range.moveToBookmark( dropBookmark );
 						range.select();
 						firePasteEvents( 'html', clipboard );
+						editor.fire( 'unlockSnapshot' );
 					}
 				}
 
