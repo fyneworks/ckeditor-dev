@@ -105,6 +105,10 @@ var editor = CKEDITOR.inline( document.getElementById( 'editable' ) );
 		CKEDITOR.disableAutoInline = true;
 
 		var editor = CKEDITOR.inline( 'editable' );
+
+		editor.on( 'paste', function() {
+			console.log( 'paste' );
+		} );
 	</script>
 	<div id="footer">
 		<hr>
