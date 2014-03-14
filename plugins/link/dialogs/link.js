@@ -1037,7 +1037,7 @@ CKEDITOR.dialog.add( 'link', function( editor ) {
 
 			this.setupContent( parseLink.apply( this, [ editor, element ] ) );
 		},
-		onOk: function() {
+		onOk: function( evt ) {
 			var attributes = {},
 				removeAttributes = [],
 				data = {},
@@ -1175,7 +1175,7 @@ CKEDITOR.dialog.add( 'link', function( editor ) {
 			attributes.href = attributes[ 'data-cke-saved-href' ];
 
 			if ( !this._.selectedElement ) {
-				var range = selection.getRanges()[ 0 ];
+				var range = evt.data.customRange || selection.getRanges()[ 0 ];
 
 				// Use link URL as text with a collapsed cursor.
 				if ( range.collapsed ) {
