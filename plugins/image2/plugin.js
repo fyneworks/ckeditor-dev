@@ -1171,6 +1171,31 @@
 			if ( evt.data.dialog && evt.data.dialog == 'link' && getFocusedWidget( editor ) )
 				evt.cancel();
 		} );
+
+		editor.on( 'dialogShow', function( evt ) {
+			var dialog = evt.data;
+
+			if ( dialog.getName() != 'link' )
+				return;
+
+			var widget = getFocusedWidget( editor );
+
+			if ( !widget )
+				return;
+
+			dialog.once( 'ok', function( evt ) {
+				var range = editor.createRange();
+
+				// Inline widgets are linked as a whole.
+				// In case of a block widget, only <img> is linked.
+				var el = widget.inline ? widget.wrapper : widget.parts.image;
+
+				range.setStartBefore( el );
+				range.setEndAfter( el );
+
+				evt.data.customRange = range;
+			}, null, null, 0 )
+		} );
 	}
 
 	// Returns the focused widget, if of the type specific for this plugin.
