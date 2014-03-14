@@ -752,6 +752,10 @@
 				var resizeWrapper = el.getFirst( 'span' ),
 					img;
 
+				// So it is a > span.cke_image_resizer_wrapper.
+				if ( !resizeWrapper )
+					resizeWrapper = el.getFirst().getFirst( 'span' );
+
 				if ( resizeWrapper ) {
 					img = resizeWrapper.getFirst( 'img' );
 					resizeWrapper.replaceWith( img );
