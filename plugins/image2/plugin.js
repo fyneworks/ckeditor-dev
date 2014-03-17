@@ -90,6 +90,11 @@
 				toolbar: 'insert,10'
 			} );
 
+			// Add feature to ACF if button is not removed.
+			var removeButtons = editor.config.removeButtons;
+			if ( !removeButtons || CKEDITOR.tools.indexOf( removeButtons, 'Image' ) == -1 )
+				editor.addFeature( image );
+
 			// Register context menu option for editing widget.
 			if ( editor.contextMenu ) {
 				editor.addMenuGroup( 'image', 10 );
