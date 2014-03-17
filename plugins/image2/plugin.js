@@ -234,6 +234,11 @@
 
 			parts: {
 				image: 'img',
+				// Note: Valid for centered, non-captioned widgets only:
+				// 	<p style="text-align:center">
+				// 		<a><img/></a>
+				// 	</p>
+				link: 'a',
 				caption: 'figcaption'
 			},
 
@@ -511,7 +516,8 @@
 			}
 
 			function wrapInCentering( editor, element ) {
-				var attribsAndStyles = {};
+				var attribsAndStyles = {},
+					parent = element.getParent();
 
 				if ( alignClasses )
 					attribsAndStyles.attributes = { 'class': alignClasses[ 1 ] };
@@ -522,6 +528,10 @@
 				// that wraps widget contents and does the trick either with style or class.
 				var center = doc.createElement(
 					editor.activeEnterMode == CKEDITOR.ENTER_P ? 'p' : 'div', attribsAndStyles );
+
+				// If the image was linked, include the link inside of center wrapper.
+				if ( parent.is( 'a' ) )
+					element = parent;
 
 				// Replace element with centering wrapper.
 				replaceSafely( center, element );
@@ -749,12 +759,8 @@
 			// De-wrap the image from resize handle wrapper.
 			// Only block widgets have one.
 			if ( !this.inline ) {
-				var resizeWrapper = el.getFirst( 'span' ),
+				var resizeWrapper = getResizerWrapper( el ),
 					img;
-
-				// So it is a > span.cke_image_resizer_wrapper.
-				if ( !resizeWrapper )
-					resizeWrapper = el.getFirst().getFirst( 'span' );
 
 				if ( resizeWrapper ) {
 					img = resizeWrapper.getFirst( 'img' );
@@ -889,13 +895,20 @@
 
 		// Inline widgets don't need a resizer wrapper as an image spans the entire widget.
 		if ( !widget.inline ) {
-			var oldResizeWrapper = widget.element.getFirst(),
+			var oldResizeWrapper = getResizerWrapper( widget.element ),
 				resizeWrapper = doc.createElement( 'span' );
 
 			resizeWrapper.addClass( 'cke_image_resizer_wrapper' );
 			resizeWrapper.append( widget.parts.image );
 			resizeWrapper.append( resizer );
-			widget.element.append( resizeWrapper, true );
+
+			// 	<p style="text-align:center">
+			// 		<a><img/></a>
+			// 	</p>
+			if ( widget.parts.link )
+				widget.parts.link.append( resizeWrapper, true );
+			else
+				widget.element.append( resizeWrapper, true );
 
 			// Remove the old wrapper which could came from e.g. pasted HTML
 			// and which could be corrupted (e.g. resizer span has been lost).
@@ -1284,6 +1297,13 @@
 			};
 
 		return features;
+	}
+
+	function getResizerWrapper( el ) {
+		var first = el.getFirst(),
+			name = first instanceof CKEDITOR.htmlParser.element ? first.name : first.getName();
+
+		return name == 'a' ? first.getFirst() : first;
 	}
 } )();
 
