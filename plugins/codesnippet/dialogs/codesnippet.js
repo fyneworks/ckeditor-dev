@@ -112,19 +112,27 @@
 		var valueLength = insertValue.length,
 			sel;
 
-		if ( field.selectionStart !== undefined  ) {
-			// Modern browsers.
-			var startPos = field.selectionStart,
-				endPos = field.selectionEnd;
-			field.value = field.value.slice( 0, startPos ) + insertValue + field.value.slice( endPos );
-			field.selectionStart = field.selectionEnd = startPos + valueLength;
+		if ( field.setRangeText  ) {
+			// FF specific, note this does not insert text when range is collapsed.
+			field.setRangeText( insertValue );
+			// Collapse range.
+			field.selectionStart = field.selectionEnd;
+		} else if ( document.queryCommandSupported( 'insertText' ) && !CKEDITOR.env.gecko ) {
+			// Firefox declares that it handles it, but FF will throw some nasty exceptions.
+			field.ownerDocument.execCommand( 'insertText', false, insertValue );
 		} else if ( document.selection ) {
-			// Older IE.
+			// Older IE, which works pretty well.
 			field.focus();
 			sel = document.selection.createRange();
 			sel.text = insertValue;
 			sel.move( 'character', 0 );
 			sel.select();
+		} else if ( field.selectionStart !== undefined  ) {
+			// Modern browsers.
+			var startPos = field.selectionStart,
+				endPos = field.selectionEnd;
+			field.value = field.value.slice( 0, startPos ) + insertValue + field.value.slice( endPos );
+			field.selectionStart = field.selectionEnd = startPos + valueLength;
 		} else {
 			// No selection info.
 			field.value += insertValue;
