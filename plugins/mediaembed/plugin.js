@@ -28,7 +28,8 @@
 					'//noembed.com/embed?nowrap=on&url={url}&callback={callback}'
 				),
 				loadingImageUrl = this.path + 'images/loader.gif',
-				outputStrategy = editor.config.mediaembed_output || 'default';
+				outputStrategy = editor.config.mediaembed_output || 'default',
+				lang = editor.lang.mediaembed;
 
 			regexifyPatterns( editor );
 			CKEDITOR.dialog.add( 'mediaembed', this.path + 'dialogs/mediaembed.js' );
@@ -36,7 +37,7 @@
 			var widgetDefinition = {
 				mask: true,
 				dialog: 'mediaembed',
-				button: editor.lang.mediaembed.button,
+				button: lang.button,
 				template: '<div></div>',
 
 				data: function() {
@@ -51,8 +52,21 @@
 					this.element.setHtml( '<img src="' + loadingImageUrl + '" />' );
 
 					CKEDITOR._.oembedCallbacks.push( function( result ) {
+						var resultMarkup = result.html,
+							encodedError;
+
 						editor.fire( 'lockSnapshot' );
-						that.element.setHtml( result.html );
+						if ( result.html === undefined ) {
+							// Notify that content-fetching error occured.
+							that.data.error = 1;
+							resultMarkup = lang.oembedContentUnavailable;
+							// If error message is provided lets append it.
+							if ( result.error ) {
+								encodedError = CKEDITOR.tools.htmlEncode( result.error );
+								resultMarkup += ' ' + lang.oembedContentUnavailableMsg.replace( /%s/g, encodedError );
+							}
+						}
+						that.element.setHtml( resultMarkup );
 						editor.fire( 'unlockSnapshot' );
 					} );
 
@@ -172,7 +186,7 @@
 				data.url = element.attributes[ 'data-oembed-url' ];
 
 				// If element has at least child, and we need to ensure that it's not a whitespace text node.
-				if ( children.length && ( children[ 0 ].type != CKEDITOR.NODE_TEXT || CKEDITOR.tools.trim( children[ 0 ].value ) ) ) {
+				if ( !element.attributes[ 'data-oembed-error' ] && children.length && ( children[ 0 ].type != CKEDITOR.NODE_TEXT || CKEDITOR.tools.trim( children[ 0 ].value ) ) ) {
 					// Reloading oembed content may be skipped.
 					data.skipReload = 1;
 					return element;
@@ -185,6 +199,7 @@
 			downcast: function() {
 				var ret = new CKEDITOR.htmlParser.fragment.fromHtml( this.element.getHtml(), 'div' );
 				ret.attributes[ 'data-oembed-url' ] = this.data.url;
+				this.data.error && ( ret.attributes[ 'data-oembed-error' ] = 1 );
 				return ret;
 			}
 		}
