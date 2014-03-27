@@ -163,8 +163,8 @@
 			}
 		},
 		'default': {
-			allowedContent: 'div[data-oembed-url]',
-			requiredContent: 'div[data-oembed-url]',
+			allowedContent: 'div[data-oembed-url,data-oembed-error]',
+			requiredContent: 'div[data-oembed-url,data-oembed-error]',
 			upcast: function( element, data ) {
 				if ( element.name != 'div' || !element.attributes[ 'data-oembed-url' ] )
 					return;
