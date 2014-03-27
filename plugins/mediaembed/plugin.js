@@ -97,19 +97,7 @@
 				evt.data.dataValue = publicNamespace.pasteDecorator[ outputStrategy ]( url );
 			} );
 
-			this.addCss( editor, this.path + (config.mediaembed_styles || 'styles/combined_gist.min.css') );
-		},
-
-		// Adds css file path to config.contentsCss. This funciton should be introduced in #11532.
-		addCss: function( editor, cssPath ) {
-			var cfg = editor.config,
-				curContentsCss = cfg.contentsCss;
-
-			// Convert current value into array.
-			if ( !CKEDITOR.tools.isArray( curContentsCss ) )
-				cfg.contentsCss = !curContentsCss ? [] : [ curContentsCss ];
-
-			cfg.contentsCss.push( cssPath );
+			editor.addContentsCss && editor.addContentsCss( this.path + ( config.mediaembed_styles || 'styles/combined_gist.min.css' ) );
 		}
 	} );
 
