@@ -18,6 +18,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 		Output strategy:
 		<select id="strategy" onchange="stratUpdate( this );">
 			<option value="default" selected="selected">Default</option>
+			<option value="default+no_cache">Default (no cache)</option>
 			<option value="oembed">Oembed</option>
 		</select>
 	</div>
@@ -120,6 +121,14 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
 <p>yyy</p>
 	</div>
+
+	<div class="source" id="content_default+no_cache">
+		<div data-oembed-url="https://gist.github.com/leedo/796300"></div>
+		<p>xxx</p>
+		<div data-oembed-url="http://twitter.com/#!/leed0/status/65058247593299968"></div>
+		<p>yyy</p>
+	</div>
+
 	<script>
 		function stratUpdate( stratPicker ) {
 			stratPicker.disabled = true;
@@ -127,10 +136,12 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 				CKEDITOR.instances.editor1.destroy();
 			}
 
+			var stratName = stratPicker.value.split( '+' )[ 0 ];
+
 			editor = CKEDITOR.replace( 'editor1', {
 				allowedContent: true,
 				extraPlugins: 'mediaembed',
-				mediaembed_output: stratPicker.value,
+				mediaembed_output: stratName,
 				height: 500,
 				on: {
 					instanceReady: function( evt ) {
