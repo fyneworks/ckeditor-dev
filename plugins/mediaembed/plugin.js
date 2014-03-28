@@ -169,8 +169,8 @@
 			}
 		},
 		'default': {
-			allowedContent: 'div[data-oembed-url,data-oembed-error]',
-			requiredContent: 'div[data-oembed-url,data-oembed-error]',
+			allowedContent: 'div[data-oembed-url]',
+			requiredContent: 'div[data-oembed-url]',
 			upcast: function( element, data ) {
 				if ( element.name != 'div' || !element.attributes[ 'data-oembed-url' ] )
 					return;
@@ -180,7 +180,7 @@
 				data.url = element.attributes[ 'data-oembed-url' ];
 
 				// If element has at least child, and we need to ensure that it's not a whitespace text node.
-				if ( !element.attributes[ 'data-oembed-error' ] && children.length && ( children[ 0 ].type != CKEDITOR.NODE_TEXT || CKEDITOR.tools.trim( children[ 0 ].value ) ) ) {
+				if ( children.length && ( children[ 0 ].type != CKEDITOR.NODE_TEXT || CKEDITOR.tools.trim( children[ 0 ].value ) ) ) {
 					// Reloading oembed content may be skipped.
 					data.skipReload = 1;
 					return element;
@@ -193,7 +193,12 @@
 			downcast: function() {
 				var ret = new CKEDITOR.htmlParser.fragment.fromHtml( this.element.getHtml(), 'div' );
 				ret.attributes[ 'data-oembed-url' ] = this.data.url;
-				this.data.error && ( ret.attributes[ 'data-oembed-error' ] = 1 );
+
+				// If an error occured we want to erease its inner HTML, so system
+				// will attempt to redownload it next occasion.
+				if ( this.data.error )
+					ret.children = [];
+
 				return ret;
 			}
 		}
