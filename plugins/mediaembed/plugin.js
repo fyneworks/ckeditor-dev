@@ -37,6 +37,7 @@
 
 			CKEDITOR.dialog.add( 'mediaembed', this.path + 'dialogs/mediaembed.js' );
 
+			// Register a common part of widget definition.
 			var widgetDefinition = {
 				mask: true,
 				dialog: 'mediaembed',
@@ -44,16 +45,23 @@
 				template: '<div></div>',
 
 				data: function() {
-
 					// In some cases we can skip reloading the content if it's already there.
 					if ( this.data.skipReload )
 						return;
 
+					// We expect only url to be changed, so we can reload the content.
+					this.reloadContent();
+				},
+
+				// Performs a query to reload widget content, fetching it from
+				// oembed service.
+				reloadContent: function() {
 					var that = this;
 
 					// Insert loading icon.
 					this.element.setHtml( '<img src="' + loadingImageUrl + '" />' );
 
+					// Create actual callback for JSONP.
 					CKEDITOR._.oembedCallbacks.push( function( result ) {
 						var resultMarkup = result.html,
 							encodedError;
@@ -73,6 +81,7 @@
 						editor.fire( 'unlockSnapshot' );
 					} );
 
+					// Create a script tag, which will perform JSONP request.
 					var scriptSrc = oembedProviderUrl.output( {
 							url: encodeURIComponent( this.data.url ),
 							callback: 'CKEDITOR._.oembedCallbacks[' + ( CKEDITOR._.oembedCallbacks.length - 1 ) + ']'
@@ -84,10 +93,11 @@
 				}
 			};
 
-			// Override widget definition with current strategy members.
+			// Override/extend widget definition with current strategy members.
 			CKEDITOR.tools.extend( widgetDefinition, CKEDITOR.plugins.mediaembed.outputStrategies[ outputStrategy ], true );
 			editor.widgets.add( 'mediaembed', widgetDefinition );
 
+			// Handling paste event, to convert paste url into a widget.
 			editor.on( 'paste', function( evt ) {
 				var data = evt.data.dataValue,
 					publicNamespace = CKEDITOR.plugins.mediaembed,
@@ -203,6 +213,7 @@
 			}
 		}
 	};
+
 	/**
 	 * Paste decorator allows for transforming matched oembed url, into tag
 	 * which may be upcasted to a widget.
