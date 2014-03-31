@@ -107,7 +107,49 @@
 				if ( !provider )
 					return;
 
-				evt.data.dataValue = publicNamespace.pasteDecorator[ outputStrategy ]( url );
+				// This afterPaste listener, will do all the job - adding extra
+				// snapshot with link as a plain text (or anchor) in IE case, and
+				// after that, converting it into a widget.
+				evt.editor.once( 'afterPaste', function( evt ) {
+					editor.fire( 'lockSnapshot', { dontUpdate: true } );
+
+					var rng = editor.getSelection().getRanges()[ 0 ],
+						// Determine boundaries.
+						iterationWrapper = rng.getCommonAncestor(),
+						boundarySeen = false,
+						boundaryTextNode = rng.getBoundaryNodes().endNode,
+						nodeToRemove;
+
+					if ( iterationWrapper.type == CKEDITOR.NODE_TEXT )
+						iterationWrapper = iterationWrapper.getParent();
+
+					iterationWrapper.forEach( function( node ) {
+						// Boundary already seen, no need to continue.
+						if ( boundarySeen )
+							return false;
+
+						// Confirm if given node does contain pasted url (as a text).
+						if ( node.getText && node.getText() == url )
+							nodeToRemove = node;
+
+						// We should check if endContainer was faced, if so, it
+						// should stop searching.
+						if ( node.equals( boundaryTextNode ) )
+							boundarySeen = true;
+
+					}, null , false );
+
+					if ( nodeToRemove ) {
+						rng.selectNodeContents( nodeToRemove );
+						// Now lets remove contents of created range.
+						rng.deleteContents();
+					}
+
+					editor.fire( 'unlockSnapshot' );
+					// Insert decorated url.
+					editor.insertHtml( publicNamespace.pasteDecorator[ outputStrategy ]( url ) );
+					editor.fire( 'updateSnapshot' );
+				} );
 			} );
 
 			editor.addContentsCss && editor.addContentsCss( this.path + ( config.mediaembed_styles || 'styles/combined_gist.min.css' ) );
