@@ -99,6 +99,10 @@
 
 			// Handling paste event, to convert paste url into a widget.
 			editor.on( 'paste', function( evt ) {
+
+				if ( config.mediaembed_disablePasteUpcast )
+					return;
+
 				var data = evt.data.dataValue,
 					publicNamespace = CKEDITOR.plugins.mediaembed,
 					url = extractUrlFromPaste( data ),
@@ -294,6 +298,14 @@
 				patterns[ j ] = new RegExp( '^' + patterns[ j ] );
 		}
 	}
+
+	/**
+	 * If set to `false` mediaembed plugin will automatically detect oembed content
+	 * link in pasted content.
+	 *
+	 * @cfg {Boolean} [mediaembed_disablePasteUpcast=false]
+	 * @member CKEDITOR.config
+	 */
 
 	/**
 	 * Comma separated string, specifying names of allowed providers.
