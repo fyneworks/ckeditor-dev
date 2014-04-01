@@ -45,8 +45,9 @@
 				template: '<div></div>',
 
 				data: function() {
-					// In some cases we can skip reloading the content if it's already there.
-					if ( this.data.skipReload )
+					// In some cases we can skip reloading the content if it's already there, or
+					// if data.url is not given.
+					if ( this.data.skipReload || !this.data.url )
 						return;
 
 					// We expect only url to be changed, so we can reload the content.
@@ -79,6 +80,9 @@
 						}
 						that.element.setHtml( resultMarkup );
 						editor.fire( 'unlockSnapshot' );
+
+						// Remove script element.
+						script.remove();
 					} );
 
 					// Create a script tag, which will perform JSONP request.
