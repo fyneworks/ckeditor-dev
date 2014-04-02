@@ -39,13 +39,11 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 		&lt;div data-oembed-url=&quot;https://twitter.com/ckeditor/status/425619710181650432&quot;&gt;&lt;/div&gt;
 		&lt;p&gt;Github commit:&lt;/p&gt;
 		&lt;div data-oembed-url=&quot;https://github.com/ckeditor/ckeditor-dev/commit/1878f1a35306c5fa1cb4622d8f42c02d772741fb&quot;&gt;&lt;/div&gt;
-		&lt;p&gt;Gist sample:&lt;/p&gt;
-		&lt;div data-oembed-url=&quot;https://gist.github.com/leedo/796300&quot;&gt;&lt;/div&gt;
 	</textarea>
 
 	<br>
 
-	<div class="description">
+	<div class="description providers">
 		<p>
 			Currently Media Embed supports following services:
 		</p>
@@ -72,6 +70,7 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 			<li>Path</li>
 			<li>Picplz</li>
 			<li>Qik</li>
+		</ul><ul>
 			<li>Rdio</li>
 			<li>Skitch</li>
 			<li>SlideShare</li>
@@ -95,16 +94,19 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 			<li>YouTube</li>
 			<li>iTunes Movie Trailers</li>
 		</ul>
+		<br>
 	</div>
 
 	<script>
-
 		CKEDITOR.replace( 'editor1', {
 			extraPlugins: 'mediaembed',
 			height: 500
 		} );
-
 	</script>
+	<style type="text/css">
+	.description.providers ul { float: left; width: 45%; }
+	.description.providers br { clear: both; }
+	</style>
 
 	<div id="footer">
 		<hr>
