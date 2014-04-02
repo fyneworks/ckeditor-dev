@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+-->
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Media Embed plugin &mdash; CKEditor Sample</title>
+	<script src="../../../ckeditor.js"></script>
+	<link href="../../../samples/sample.css" rel="stylesheet">
+	<meta name="ckeditor-sample-name" content="Media Embed plugin">
+	<meta name="ckeditor-sample-group" content="Plugins">
+	<meta name="ckeditor-sample-description" content="Insert all kind of media with Media Embed plugin.">
+	<meta name="ckeditor-sample-isnew" content="1">
+</head>
+<body>
+	<h1 class="samples">
+		<a href="../../../samples/index.html">CKEditor Samples</a> &raquo; Media Embed
+	</h1>
+
+	<div class="description">
+		<p>
+			Media Embed plugin allows you to insert videos, images, tweets, music and much more from popular services.
+			<br>
+			Simply enable plugin and paste link to desired content. You can also use toolbar button to open a dialog where you can insert the link.
+		</p>
+<pre class="samples">
+CKEDITOR.replace( '<em>textarea_id</em>', {
+	<strong>extraPlugins: 'mediaembed'</strong>
+} );
+</pre>
+	</div>
+
+	<textarea id="editor1" cols="10" rows="10">
+		&lt;p&gt;Vimeo video:&lt;/p&gt;
+		&lt;div data-oembed-url=&quot;http://vimeo.com/46523580&quot;&gt;&lt;/div&gt;
+		&lt;p&gt;Twitter sample:&lt;/p&gt;
+		&lt;div data-oembed-url=&quot;https://twitter.com/ckeditor/status/425619710181650432&quot;&gt;&lt;/div&gt;
+		&lt;p&gt;Github commit:&lt;/p&gt;
+		&lt;div data-oembed-url=&quot;https://github.com/ckeditor/ckeditor-dev/commit/1878f1a35306c5fa1cb4622d8f42c02d772741fb&quot;&gt;&lt;/div&gt;
+		&lt;p&gt;Gist sample:&lt;/p&gt;
+		&lt;div data-oembed-url=&quot;https://gist.github.com/leedo/796300&quot;&gt;&lt;/div&gt;
+	</textarea>
+
+	<br>
+
+	<div class="description">
+		<p>
+			Currently Media Embed supports following services:
+		</p>
+		<ul>
+			<li>ADN</li>
+			<li>ASCII Art Farts</li>
+			<li>Amazon</li>
+			<li>Ars Technica</li>
+			<li>Bash.org</li>
+			<li>Beer Advocate</li>
+			<li>CloudApp</li>
+			<li>Dropbox</li>
+			<li>Flickr</li>
+			<li>Funny or Die</li>
+			<li>GiantBomb</li>
+			<li>Gist</li>
+			<li>Github Commit</li>
+			<li>Hulu</li>
+			<li>IMDB</li>
+			<li>Imgur</li>
+			<li>Instagram</li>
+			<li>Lockerz</li>
+			<li>Monoprice</li>
+			<li>Path</li>
+			<li>Picplz</li>
+			<li>Qik</li>
+			<li>Rdio</li>
+			<li>Skitch</li>
+			<li>SlideShare</li>
+			<li>SoundCloud</li>
+			<li>Spotify</li>
+			<li>TED</li>
+			<li>The Onion</li>
+			<li>The Verge</li>
+			<li>TrailerAddict</li>
+			<li>Twitlonger</li>
+			<li>Twitpic</li>
+			<li>Twitter</li>
+			<li>Urban Dictionary</li>
+			<li>Viddler</li>
+			<li>Vimeo</li>
+			<li>Vine</li>
+			<li>Wikipedia</li>
+			<li>Wired</li>
+			<li>XKCD</li>
+			<li>YFrog</li>
+			<li>YouTube</li>
+			<li>iTunes Movie Trailers</li>
+		</ul>
+	</div>
+
+	<script>
+
+		CKEDITOR.replace( 'editor1', {
+			extraPlugins: 'mediaembed',
+			height: 500
+		} );
+
+	</script>
+
+	<div id="footer">
+		<hr>
+		<p>
+			CKEditor - The text editor for the Internet - <a class="samples" href="http://ckeditor.com/">http://ckeditor.com</a>
+		</p>
+		<p id="copy">
+			Copyright &copy; 2003-2014, <a class="samples" href="http://cksource.com/">CKSource</a> - Frederico
+			Knabben. All rights reserved.
+		</p>
+	</div>
+</body>
+</html>
