@@ -47,6 +47,8 @@
 				data: function() {
 					// In some cases we can skip reloading the content if it's already there, or
 					// if data.url is not given.
+					console.log( 'data called with ', this.data.skipReload, !this.data.url );
+
 					if ( this.data.skipReload || !this.data.url )
 						return;
 
@@ -83,6 +85,8 @@
 
 						// Remove script element.
 						script.remove();
+
+						that.fire( 'contentLoaded', result );
 					} );
 
 					// Create a script tag, which will perform JSONP request.
@@ -304,6 +308,15 @@
 	}
 
 	/**
+	 * An event fired when a widget instance got response from oembed provider, containing
+	 * object returned with JSONP callback.
+	 *
+	 * @since 4.4
+	 * @event contentLoaded
+	 * @param {Object} result Oembed provider response.
+	 */
+
+	/**
 	 * If set to `false` mediaembed plugin will automatically detect oembed content
 	 * link in pasted content.
 	 *
@@ -354,5 +367,4 @@
 	 * @cfg {String} [mediaembed_url='//noembed.com/embed?nowrap=on&url={url}&callback={callback}']
 	 * @member CKEDITOR.config
 	 */
-
 } )();
