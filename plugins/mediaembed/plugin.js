@@ -105,6 +105,12 @@
 			CKEDITOR.tools.extend( widgetDefinition, CKEDITOR.plugins.mediaembed.outputStrategies[ outputStrategy ], true );
 			editor.widgets.add( 'mediaembed', widgetDefinition );
 
+			// Register a callback which will prevent filtering content inside mediaembed widget.
+			editor.filter.addElementCallback( function( el ) {
+				if ( el.attributes[ 'data-oembed-url' ] )
+					return CKEDITOR.FILTER_SKIP_TREE;
+			} );
+
 			// Handling paste event, to convert paste url into a widget.
 			editor.on( 'paste', function( evt ) {
 
