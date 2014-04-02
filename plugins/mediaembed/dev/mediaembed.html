@@ -17,28 +17,117 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	<div>
 		Output strategy:
 		<select id="strategy" onchange="stratUpdate( this );">
-			<option value="default" selected="selected">Default</option>
-			<option value="default+no_cache">Default (no cache)</option>
+			<option value="default">Default</option>
+			<option value="default+no_cache" selected="selected">Default (no cache)</option>
 			<option value="oembed">Oembed</option>
 		</select>
 	</div>
-	<style type="text/css">
-	body > p > textarea{ display: none; }
-	textarea#editor1{ display: inline; }
-	div.source{ display: none; }
-	</style>
 	<p>
 		<textarea id="editor1"></textarea>
 	</p>
 
 	<div class="source" id="content_oembed">
+		<p>Vimeo video:</p>
+		<oembed>http://vimeo.com/46523580</oembed>
+		<p>Twitter sample:</p>
+		<oembed>https://twitter.com/ckeditor/status/425619710181650432</oembed>
+		<p>Github commit:</p>
+		<oembed>https://github.com/ckeditor/ckeditor-dev/commit/1878f1a35306c5fa1cb4622d8f42c02d772741fb</oembed>
+		<p>Gist sample:</p>
 		<oembed>https://gist.github.com/leedo/796300</oembed>
-		<p>xxx</p>
-		<oembed>http://twitter.com/#!/leed0/status/65058247593299968</oembed>
-		<p>yyy</p>
 	</div>
 	<div class="source" id="content_default">
-		<div data-oembed-url="https://gist.github.com/leedo/796300">
+<p>Vimeo video:</p>
+
+<div data-oembed-url="http://vimeo.com/46523580">
+<div class="noembed-embed-inner noembed-vimeo"><iframe allowfullscreen="" frameborder="0" height="360" mozallowfullscreen="" src="//player.vimeo.com/video/46523580" title="Full 3d render DM environments" webkitallowfullscreen="" width="640"></iframe></div>
+</div>
+
+<p>Twitter sample:</p>
+
+<div data-oembed-url="https://twitter.com/ckeditor/status/425619710181650432">
+<div class="noembed-embed-inner noembed-twitter">
+<div class="tweet_main">
+<div class="tweet_user">
+<div class="tweet_image"><a data-cke-saved-href="http://www.twitter.com/ckeditor" href="http://www.twitter.com/ckeditor" target="_blank"><img data-cke-saved-src="https://noembed.com/i/http://pbs.twimg.com/profile_images/2534229690/27xd5v85l46syvxgmobi_normal.jpeg" height="36" src="https://noembed.com/i/http://pbs.twimg.com/profile_images/2534229690/27xd5v85l46syvxgmobi_normal.jpeg" width="36" /> </a></div>
+
+<div class="tweet_name"><a data-cke-saved-href="http://www.twitter.com/ckeditor" href="http://www.twitter.com/ckeditor" target="_blank"><span class="tweet_screen_name">CKEditor</span><br />
+<span class="tweet_real_name">ckeditor</span> </a></div>
+</div>
+
+<div class="tweet_text">
+<div>CKEditor 4.3.2 is out! This is a minor bug-fixing release that includes a few updates to the new #Widget system: <a data-cke-saved-href="http://ckeditor.com/blog/CKEditor-4.3.2-Released" href="http://ckeditor.com/blog/CKEditor-4.3.2-Released" target="_blank">ckeditor.com/blog/CKEditor-…</a></div>
+</div>
+
+<div class="tweet_info"><a data-cke-saved-href="http://www.twitter.com/ckeditor/status/425619710181650432" href="http://www.twitter.com/ckeditor/status/425619710181650432" target="_blank"><span class="tweet_created_at" id="noembed-timestamp-c03d04f24c527cc37fa61d9c261606e339f86794">Tue Jan 21 13:23:41 +0000 2014</span> </a> via <a data-cke-saved-href="https://about.twitter.com/products/tweetdeck" href="https://about.twitter.com/products/tweetdeck" rel="nofollow">TweetDeck</a></div>
+</div>
+<script type="text/javascript">
+  var months = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
+  var elem = document.getElementById("noembed-timestamp-c03d04f24c527cc37fa61d9c261606e339f86794");
+  var date = new Date(elem.innerHTML);
+
+  if (date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    if (minutes < 10) minutes = "0"+minutes.toString();
+
+    elem.innerHTML =  hours + ":" + minutes+ " " + (months[date.getMonth()])
+                   + " " + date.getDate() + ", " + date.getFullYear();
+  }</script></div>
+</div>
+
+<p>Github commit:</p>
+
+<div data-oembed-url="https://github.com/ckeditor/ckeditor-dev/commit/1878f1a35306c5fa1cb4622d8f42c02d772741fb">
+<div class="noembed-embed-inner noembed-github">
+<p class="github-description"><a class="github-user" data-cke-saved-href="https://api.github.com/users/Reinmar" href="https://api.github.com/users/Reinmar">Reinmar</a> <a data-cke-saved-href="https://api.github.com/repos/ckeditor/ckeditor-dev/git/commits/1878f1a35306c5fa1cb4622d8f42c02d772741fb" href="https://api.github.com/repos/ckeditor/ckeditor-dev/git/commits/1878f1a35306c5fa1cb4622d8f42c02d772741fb">Started 4.3 development.</a></p>
+
+<div class="github-change"><a data-cke-pa-onclick="var f=this.parentNode.getElementsByClassName(&quot;github-file&quot;)[0];f.className=&quot;github-file&quot;+(f.className.match(/visible/)?&quot;&quot;:&quot; visible&quot;);event.preventDefault();" data-cke-saved-href="https://github.com/ckeditor/ckeditor-dev/blob/1878f1a35306c5fa1cb4622d8f42c02d772741fb/CHANGES.md" href="https://github.com/ckeditor/ckeditor-dev/blob/1878f1a35306c5fa1cb4622d8f42c02d772741fb/CHANGES.md" target="_blank">CHANGES.md</a> <span class="github-stats"> <span class="github-addition">+2</span> </span>
+
+<div class="github-file">
+<table class="highlighttable">
+	<tbody>
+		<tr>
+			<td class="linenos">
+			<div class="linenodiv">
+			<pre>
+1
+2
+3
+4
+5
+6
+7
+8
+9</pre>
+			</div>
+			</td>
+			<td class="code">
+			<div class="highlight">
+			<pre>
+<span class="gu">@@ -1,6 +1,8 @@</span>
+ CKEditor 4 Changelog
+ ====================
+
+<span class="gi">+## CKEditor 4.3</span>
+<span class="gi">+</span>
+ ## CKEditor 4.2.1
+
+ ## CKEditor 4.2
+</pre>
+			</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<p>Gist sample:</p>
+
+<div data-oembed-url="https://gist.github.com/leedo/796300">
 <div class="noembed-embed-inner noembed-gist">
 <h3>gistfile1.pl</h3>
 
@@ -68,8 +157,8 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
   <span class="k">my</span> <span class="nv">$id</span> <span class="o">=</span> <span class="nv">$req</span><span class="o">-&gt;</span><span class="n">captures</span><span class="o">-&gt;</span><span class="p">{</span><span class="n">tweet</span><span class="p">};</span>
 
   <span class="nv">$ua</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">(</span><span class="s">"statuses/show/$id"</span><span class="p">,</span> <span class="k">sub </span><span class="p">{</span>
-	<span class="k">my</span> <span class="p">(</span><span class="nv">$hdr</span><span class="p">,</span> <span class="nv">$tweet</span><span class="p">,</span> <span class="nv">$reason</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
-	<span class="nv">$res</span><span class="o">-&gt;</span><span class="nb">send</span><span class="p">(</span><span class="s">"&lt;pre&gt;"</span><span class="o">.</span><span class="n">Dumper</span><span class="p">(</span><span class="nv">$tweet</span><span class="p">)</span><span class="o">.</span><span class="s">"&lt;/pre&gt;"</span><span class="p">);</span>
+    <span class="k">my</span> <span class="p">(</span><span class="nv">$hdr</span><span class="p">,</span> <span class="nv">$tweet</span><span class="p">,</span> <span class="nv">$reason</span><span class="p">)</span> <span class="o">=</span> <span class="nv">@_</span><span class="p">;</span>
+    <span class="nv">$res</span><span class="o">-&gt;</span><span class="nb">send</span><span class="p">(</span><span class="s">"&lt;pre&gt;"</span><span class="o">.</span><span class="n">Dumper</span><span class="p">(</span><span class="nv">$tweet</span><span class="p">)</span><span class="o">.</span><span class="s">"&lt;/pre&gt;"</span><span class="p">);</span>
   <span class="p">});</span>
 <span class="p">};</span>
 </pre>
@@ -81,52 +170,17 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 </div>
 </div>
 </div>
-
-<p>xxx</p>
-
-<div data-oembed-url="http://twitter.com/#!/leed0/status/65058247593299968">
-<div class="noembed-embed-inner noembed-twitter">
-<div class="tweet_main">
-<div class="tweet_user">
-<div class="tweet_image"><a href="http://www.twitter.com/leed0" target="_blank"><img height="36" src="https://noembed.com/i/http://pbs.twimg.com/profile_images/2287126174/2pimnixok5hz26utqc7t_normal.jpeg" width="36" /> </a></div>
-
-<div class="tweet_name"><a href="http://www.twitter.com/leed0" target="_blank"><span class="tweet_screen_name">general lee</span><br />
-<span class="tweet_real_name">leed0</span> </a></div>
-</div>
-
-<div class="tweet_text">
-<div>Just got upgraded to perl 5.12.3 on my Debian testing install, cool!</div>
-</div>
-
-<div class="tweet_info"><a href="http://www.twitter.com/leed0/status/65058247593299968" target="_blank"><span class="tweet_created_at" id="noembed-timestamp-e30770447d3fbb67b0c510da0e369d35ff581db0">Mon May 02 14:21:09 +0000 2011</span> </a> via
-
-<div>web</div>
-</div>
-</div>
-<script type="text/javascript">
-  var months = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec'];
-  var elem = document.getElementById("noembed-timestamp-e30770447d3fbb67b0c510da0e369d35ff581db0");
-  var date = new Date(elem.innerHTML);
-
-  if (date) {
-	var hours = date.getHours();
-	var minutes = date.getMinutes();
-	if (minutes < 10) minutes = "0"+minutes.toString();
-
-	elem.innerHTML =  hours + ":" + minutes+ " " + (months[date.getMonth()])
-				   + " " + date.getDate() + ", " + date.getFullYear();
-  }</script>
-</div>
-</div>
-
-<p>yyy</p>
 	</div>
 
 	<div class="source" id="content_default+no_cache">
+		<p>Vimeo video:</p>
+		<div data-oembed-url="http://vimeo.com/46523580"></div>
+		<p>Twitter sample:</p>
+		<div data-oembed-url="https://twitter.com/ckeditor/status/425619710181650432"></div>
+		<p>Github commit:</p>
+		<div data-oembed-url="https://github.com/ckeditor/ckeditor-dev/commit/1878f1a35306c5fa1cb4622d8f42c02d772741fb"></div>
+		<p>Gist sample:</p>
 		<div data-oembed-url="https://gist.github.com/leedo/796300"></div>
-		<p>xxx</p>
-		<div data-oembed-url="http://twitter.com/#!/leed0/status/65058247593299968"></div>
-		<p>yyy</p>
 	</div>
 
 	<script>
@@ -139,7 +193,6 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 			var stratName = stratPicker.value.split( '+' )[ 0 ];
 
 			editor = CKEDITOR.replace( 'editor1', {
-				allowedContent: true,
 				extraPlugins: 'mediaembed',
 				mediaembed_output: stratName,
 				height: 500,
@@ -154,5 +207,8 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
 		stratUpdate( document.getElementById( 'strategy' ) );
 	</script>
+	<style type="text/css">
+		div.source{ display: none; }
+	</style>
 </body>
 </html>
