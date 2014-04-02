@@ -15,6 +15,7 @@
 			CKEDITOR._.oembedCallbacks = [];
 			CKEDITOR.dtd.oembed = {};
 			CKEDITOR.dtd.$block.oembed = 1;
+			CKEDITOR.addCss( '.cke_widget_element.cke_loading{ background: url('+ this.path + 'images/loader.gif' + ') no-repeat; }' );
 		},
 
 		init: function( editor ) {
@@ -31,7 +32,6 @@
 					editor.config.mediaembed_url ||
 					'//noembed.com/embed?nowrap=on&url={url}&callback={callback}'
 				),
-				loadingImageUrl = this.path + 'images/loader.gif',
 				outputStrategy = editor.config.mediaembed_output || 'default',
 				lang = editor.lang.mediaembed;
 
@@ -59,8 +59,8 @@
 				reloadContent: function() {
 					var that = this;
 
-					// Insert loading icon.
-					this.element.setHtml( '<img src="' + loadingImageUrl + '" />' );
+					// Mark as loading.
+					this.element.addClass( 'cke_loading' );
 
 					// Create actual callback for JSONP.
 					CKEDITOR._.oembedCallbacks.push( function( result ) {
@@ -68,6 +68,8 @@
 							encodedError;
 
 						editor.fire( 'lockSnapshot' );
+						that.element.removeClass( 'cke_loading' );
+
 						if ( result.html === undefined ) {
 							// Notify that content-fetching error occured.
 							that.data.error = 1;
@@ -256,9 +258,10 @@
 				var ret = new CKEDITOR.htmlParser.fragment.fromHtml( this.element.getHtml(), 'div' );
 				ret.attributes[ 'data-oembed-url' ] = this.data.url;
 
-				// If an error occured we want to erease its inner HTML, so system
+				// If an error occured, or it was loading (content not loaded yet)
+				// we want to erease its inner HTML, so system
 				// will attempt to redownload it next occasion.
-				if ( this.data.error )
+				if ( this.data.error || this.element.hasClass( 'cke_loading' ) )
 					ret.children = [];
 
 				return ret;
