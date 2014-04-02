@@ -47,8 +47,6 @@
 				data: function() {
 					// In some cases we can skip reloading the content if it's already there, or
 					// if data.url is not given.
-					console.log( 'data called with ', this.data.skipReload, !this.data.url );
-
 					if ( this.data.skipReload || !this.data.url )
 						return;
 
@@ -320,6 +318,7 @@
 	 * If set to `false` mediaembed plugin will automatically detect oembed content
 	 * link in pasted content.
 	 *
+	 * @since 4.4
 	 * @cfg {Boolean} [mediaembed_disablePasteUpcast=false]
 	 * @member CKEDITOR.config
 	 */
@@ -327,6 +326,7 @@
 	/**
 	 * Comma separated string, specifying names of allowed providers.
 	 *
+	 * @since 4.4
 	 * @cfg {String} [mediaembed_providersWhitelist="Twitter,Vimeo,YouTube"]
 	 * @member CKEDITOR.config
 	 */
@@ -334,6 +334,7 @@
 	/**
 	 * Path to stylesheet with css to style mediaembed content, relative to plugin directory.
 	 *
+	 * @since 4.4
 	 * @cfg {String} [mediaembed_styles="styles/combined_gist.css"]
 	 * @member CKEDITOR.config
 	 */
@@ -352,6 +353,7 @@
 	 *
 	 *  If setting is not set, default list of providers will be applied.
 	 *
+	 * @since 4.4
 	 * @cfg {Array} [mediaembed_providers]
 	 * @member CKEDITOR.config
 	 */
@@ -362,6 +364,7 @@
 	 *
 	 * Template parameters:
 	 *
+	 * @since 4.4
 	 * * **url** - matched media content url
 	 * * **callback** - name of function which needs to be called by returned javascript content
 	 * @cfg {String} [mediaembed_url='//noembed.com/embed?nowrap=on&url={url}&callback={callback}']
