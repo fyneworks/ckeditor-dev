@@ -5,7 +5,7 @@
 
 'use strict';
 
-CKEDITOR.dialog.add( 'mediaembed', function( editor ) {
+CKEDITOR.dialog.add( 'mediaEmbed', function( editor ) {
 	var lang = editor.lang.mediaembed,
 		pluginNamespace = CKEDITOR.plugins.mediaembed;
 

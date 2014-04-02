@@ -22,25 +22,25 @@
 			var config = editor.config;
 
 			// Note that default providers are regexfied only once.
-			config.mediaembed_providers = config.mediaembed_providers ?
-				regexifyPatterns( config.mediaembed_providers.split( ',' ) ) :
+			config.mediaEmbed_providers = config.mediaEmbed_providers ?
+				regexifyPatterns( config.mediaEmbed_providers.split( ',' ) ) :
 				DEFAULT_PROVIDERS;
 
-			config.mediaembed_providersWhitelist = ( config.mediaembed_providersWhitelist && config.mediaembed_providersWhitelist.split( ',' ) ) || [];
+			config.mediaEmbed_providersWhitelist = ( config.mediaEmbed_providersWhitelist && config.mediaEmbed_providersWhitelist.split( ',' ) ) || [];
 
 			var oembedProviderUrl = new CKEDITOR.template(
-					editor.config.mediaembed_url ||
+					editor.config.mediaEmbed_url ||
 					'//noembed.com/embed?nowrap=on&url={url}&callback={callback}'
 				),
-				outputStrategy = editor.config.mediaembed_output || 'default',
+				outputStrategy = editor.config.mediaEmbed_output || 'default',
 				lang = editor.lang.mediaembed;
 
-			CKEDITOR.dialog.add( 'mediaembed', this.path + 'dialogs/mediaembed.js' );
+			CKEDITOR.dialog.add( 'mediaEmbed', this.path + 'dialogs/mediaembed.js' );
 
 			// Register a common part of widget definition.
 			var widgetDefinition = {
 				mask: true,
-				dialog: 'mediaembed',
+				dialog: 'mediaEmbed',
 				button: lang.button,
 				template: '<div></div>',
 
@@ -108,7 +108,7 @@
 
 			// Override/extend widget definition with current strategy members.
 			CKEDITOR.tools.extend( widgetDefinition, CKEDITOR.plugins.mediaembed.outputStrategies[ outputStrategy ], true );
-			editor.widgets.add( 'mediaembed', widgetDefinition );
+			editor.widgets.add( 'mediaEmbed', widgetDefinition );
 
 			// Register a callback which will prevent filtering content inside mediaembed widget.
 			editor.filter.addElementCallback( function( el ) {
@@ -119,7 +119,7 @@
 			// Handling paste event, to convert paste url into a widget.
 			editor.on( 'paste', function( evt ) {
 
-				if ( config.mediaembed_disablePasteUpcast )
+				if ( config.mediaEmbed_disablePasteUpcast )
 					return;
 
 				var data = evt.data.dataValue,
@@ -175,7 +175,7 @@
 				} );
 			} );
 
-			editor.addContentsCss && editor.addContentsCss( this.path + ( config.mediaembed_styles || 'styles/combined_gist.min.css' ) );
+			editor.addContentsCss && editor.addContentsCss( this.path + ( config.mediaEmbed_styles || 'styles/combined_gist.min.css' ) );
 		}
 	} );
 
@@ -200,8 +200,8 @@
 	*/
 	CKEDITOR.plugins.mediaembed.getProviderByUrl = function( url, editor ) {
 		var config = editor.config,
-			PROVIDERS = config.mediaembed_providers,
-			providersWhitelist = config.mediaembed_providersWhitelist,
+			PROVIDERS = config.mediaEmbed_providers,
+			providersWhitelist = config.mediaEmbed_providersWhitelist,
 			provider, patterns, i, j;
 
 		for ( i = 0; i < PROVIDERS.length; ++i ) {
@@ -334,7 +334,7 @@
 	 * link in pasted content.
 	 *
 	 * @since 4.4
-	 * @cfg {Boolean} [mediaembed_disablePasteUpcast=false]
+	 * @cfg {Boolean} [mediaEmbed_disablePasteUpcast=false]
 	 * @member CKEDITOR.config
 	 */
 
@@ -342,7 +342,7 @@
 	 * Comma separated string, specifying names of allowed providers.
 	 *
 	 * @since 4.4
-	 * @cfg {String} [mediaembed_providersWhitelist="Twitter,Vimeo,YouTube"]
+	 * @cfg {String} [mediaEmbed_providersWhitelist="Twitter,Vimeo,YouTube"]
 	 * @member CKEDITOR.config
 	 */
 
@@ -350,7 +350,7 @@
 	 * Path to stylesheet with css to style mediaembed content, relative to plugin directory.
 	 *
 	 * @since 4.4
-	 * @cfg {String} [mediaembed_styles="styles/combined_gist.css"]
+	 * @cfg {String} [mediaEmbed_styles="styles/combined_gist.css"]
 	 * @member CKEDITOR.config
 	 */
 
@@ -369,7 +369,7 @@
 	 *  If setting is not set, default list of providers will be applied.
 	 *
 	 * @since 4.4
-	 * @cfg {Array} [mediaembed_providers]
+	 * @cfg {Array} [mediaEmbed_providers]
 	 * @member CKEDITOR.config
 	 */
 
@@ -382,7 +382,7 @@
 	 * @since 4.4
 	 * * **url** - matched media content url
 	 * * **callback** - name of function which needs to be called by returned javascript content
-	 * @cfg {String} [mediaembed_url='//noembed.com/embed?nowrap=on&url={url}&callback={callback}']
+	 * @cfg {String} [mediaEmbed_url='//noembed.com/embed?nowrap=on&url={url}&callback={callback}']
 	 * @member CKEDITOR.config
 	 */
 } )();
