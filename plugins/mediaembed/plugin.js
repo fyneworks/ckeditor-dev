@@ -266,17 +266,16 @@
 				element.replaceWith( ret );
 				return ret;
 			},
-			downcast: function() {
-				var ret = new CKEDITOR.htmlParser.fragment.fromHtml( this.element.getHtml(), 'div' );
-				ret.attributes[ 'data-oembed-url' ] = this.data.url;
+			downcast: function( el ) {
+				el.attributes[ 'data-oembed-url' ] = this.data.url;
 
 				// If an error occured, or it was loading (content not loaded yet)
 				// we want to erease its inner HTML, so system
 				// will attempt to redownload it next occasion.
 				if ( this.data.error || this.element.hasClass( 'cke_loading' ) )
-					ret.children = [];
+					el.children = [];
 
-				return ret;
+				return el;
 			}
 		}
 	};
