@@ -35,7 +35,7 @@
 				outputStrategy = editor.config.mediaEmbed_output || 'default',
 				lang = editor.lang.mediaembed;
 
-			CKEDITOR.dialog.add( 'mediaEmbed', this.path + 'dialogs/mediaembed.js' );
+			CKEDITOR.dialog.add( 'mediaEmbed', this.path + 'dialogs/mediaEmbed.js' );
 
 			// Register a common part of widget definition.
 			var widgetDefinition = {
