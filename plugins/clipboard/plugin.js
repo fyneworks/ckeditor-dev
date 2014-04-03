@@ -1351,7 +1351,7 @@
 						element = new CKEDITOR.dom.element( $element ),
 						rect;
 
-					if ( !element.equals( editor.editable() ) ) {
+					if ( !element.equals( editor.editable() ) && element.getName() != 'html' ) {
 						rect = element.getClientRect();
 
 						if ( x < rect.left ) {
