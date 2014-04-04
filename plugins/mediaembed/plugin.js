@@ -12,9 +12,17 @@
 		lang: 'en', // %REMOVE_LINE_CORE%
 
 		onLoad: function() {
+			var dtd = CKEDITOR.dtd,
+				i;
+			// We need to register oembed into dtd.
 			CKEDITOR._.oembedCallbacks = [];
-			CKEDITOR.dtd.oembed = {};
-			CKEDITOR.dtd.$block.oembed = 1;
+			dtd.oembed = { '#': 1 };
+			// Register oembed element as allowed child, in each tag that can contain a div.
+			for ( i in dtd ) {
+				if ( dtd[ i ].div )
+					dtd[ i ].oembed = 1;
+			}
+
 			CKEDITOR.addCss( '.cke_widget_element.cke_loading{ background: url('+ this.path + 'images/loader.gif' + ') no-repeat; }' );
 		},
 
