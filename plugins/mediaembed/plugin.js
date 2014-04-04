@@ -201,6 +201,7 @@
 
 	/**
 	* Returns provider object for given url if any found.
+	*
 	* @member CKEDITOR.plugins.mediaembed
 	* @param {String} url Oembed url to match against known patterns.
 	* @param {CKEDITOR.editor} editor
@@ -229,6 +230,7 @@
 	/**
 	 * Definies output methods. These basically contains {@link CKEDITOR.plugins.widget.definition},
 	 * indexed by strategy name.
+	 *
 	 * @member CKEDITOR.plugins.mediaembed
 	 */
 	CKEDITOR.plugins.mediaembed.outputStrategies = {
@@ -291,6 +293,7 @@
 	/**
 	 * Paste decorator allows for transforming matched oembed url, into tag
 	 * which may be upcasted to a widget.
+	 *
 	 * @member CKEDITOR.plugins.mediaembed
 	 */
 	CKEDITOR.plugins.mediaembed.pasteDecorator = {
@@ -337,8 +340,7 @@
 	 */
 
 	/**
-	 * If set to `false` mediaembed plugin will automatically detect oembed content
-	 * link in pasted content.
+	 * If set to `true` mediaembed will not automatically insert the link`s content on paste.
 	 *
 	 * @since 4.4
 	 * @cfg {Boolean} [mediaEmbed_disablePasteUpcast=false]
@@ -346,15 +348,20 @@
 	 */
 
 	/**
-	 * Comma separated string, specifying names of allowed providers.
+	 * Comma separated string, allows to explicitly specify a list of content providers that
+	 * should be handled in mediaembed plugin. Empty string means no filtering.
+	 *
+	 * Example:
+	 *
+	 *		config.mediaEmbed_providersWhitelist = "Wikipedia,Twitter,YouTube,Vimeo,Flickr"
 	 *
 	 * @since 4.4
-	 * @cfg {String} [mediaEmbed_providersWhitelist="Twitter,Vimeo,YouTube"]
+	 * @cfg {String} [mediaEmbed_providersWhitelist=""]
 	 * @member CKEDITOR.config
 	 */
 
 	/**
-	 * Path to stylesheet with css to style mediaembed content, relative to plugin directory.
+	 * Path to stylesheet with CSS to style mediaembed content, relative to plugin directory.
 	 *
 	 * @since 4.4
 	 * @cfg {String} [mediaEmbed_styles="styles/combined_gist.css"]
@@ -362,7 +369,7 @@
 	 */
 
 	/**
-	 * Array of available providers with their regexps. Each provider object should have following
+	 * Array of available providers with their RegExps. Each provider object should have following
 	 * format:
 	 *
 	 *		{
@@ -381,14 +388,15 @@
 	 */
 
 	/**
-	 * Url to oembed service. When url is matched positively against any provider regexp, plugin will
+	 * URL to oembed service. When url is matched positively against any provider RegExp, plugin will
 	 * query given url for oembed content.
 	 *
 	 * Template parameters:
 	 *
-	 * @since 4.4
 	 * * **url** - matched media content url
 	 * * **callback** - name of function which needs to be called by returned javascript content
+	 *
+	 * @since 4.4
 	 * @cfg {String} [mediaEmbed_url='//noembed.com/embed?nowrap=on&url={url}&callback={callback}']
 	 * @member CKEDITOR.config
 	 */
