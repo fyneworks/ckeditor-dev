@@ -99,6 +99,9 @@
 						// Remove script element.
 						script.remove();
 
+						// An event fired (on widget) when an instance got response from
+						// oembed provider, containing object returned with JSONP callback.
+						// It's used to hook the tests.
 						that.fire( 'contentLoaded', result );
 					} );
 
@@ -336,15 +339,6 @@
 				patterns[ j ] = new RegExp( '^' + patterns[ j ] );
 		}
 	}
-
-	/**
-	 * An event fired when a widget instance got response from oembed provider, containing
-	 * object returned with JSONP callback.
-	 *
-	 * @since 4.4
-	 * @event contentLoaded
-	 * @param {Object} result Oembed provider response.
-	 */
 
 	/**
 	 * If set to `true` mediaembed will not automatically insert the link`s content on paste.
