@@ -1170,6 +1170,37 @@
 		},
 
 		/**
+		 * Fixes FF issue with disappearing cursor.
+		 *
+		 *		CKEDITOR.env.gecko && CKEDITOR.tools.refreshCursor( editor );
+		 *
+		 * @param {CKEDITOR.editor} editor Editor instance.
+		 * @since 4.5
+		 */
+		refreshCursor: function( editor ) {
+			if ( editor.editable().isInline() )
+				return;
+
+			// Refresh all editor instances on the page (#5724).
+			var all = CKEDITOR.instances;
+			for ( var i in all ) {
+				var one = all[ i ];
+				if ( one.mode == 'wysiwyg' && !one.readOnly ) {
+					var body = one.document.getBody();
+					// Refresh 'contentEditable' otherwise
+					// DOM lifting breaks design mode. (#5560)
+					body.setAttribute( 'contentEditable', false );
+					body.setAttribute( 'contentEditable', true );
+				}
+			}
+
+			if ( editor.editable().hasFocus ) {
+				editor.toolbox.focus();
+				editor.focus();
+			}
+		},
+
+		/**
 		 * The data URI of a transparent image. May be used e.g. in HTML as an image source or in CSS in `url()`.
 		 *
 		 * @since 4.4

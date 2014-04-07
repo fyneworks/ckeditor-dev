@@ -583,6 +583,11 @@
 					var dropRange = getRangeAtDropPosition( editor, evt );
 
 					if ( dropRange ) {
+						// Because of FF bug we need to use this hack, otherwise cursor is hidden.
+						CKEDITOR.env.gecko && editor.once( 'afterPaste', function() {
+							CKEDITOR.tools.refreshCursor( editor );
+						} );
+
 						// Paste content into the drop position.
 						dropRange.select();
 						var dataTransfer = evt.data.$.dataTransfer,

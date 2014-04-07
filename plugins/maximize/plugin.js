@@ -68,29 +68,6 @@
 		restoreFormStyles( data );
 	}
 
-	function refreshCursor( editor ) {
-		if ( editor.editable().isInline() )
-			return;
-
-		// Refresh all editor instances on the page (#5724).
-		var all = CKEDITOR.instances;
-		for ( var i in all ) {
-			var one = all[ i ];
-			if ( one.mode == 'wysiwyg' && !one.readOnly ) {
-				var body = one.document.getBody();
-				// Refresh 'contentEditable' otherwise
-				// DOM lifting breaks design mode. (#5560)
-				body.setAttribute( 'contentEditable', false );
-				body.setAttribute( 'contentEditable', true );
-			}
-		}
-
-		if ( editor.editable().hasFocus ) {
-			editor.toolbox.focus();
-			editor.focus();
-		}
-	}
-
 	CKEDITOR.plugins.add( 'maximize', {
 		lang: 'af,ar,bg,bn,bs,ca,cs,cy,da,de,el,en,en-au,en-ca,en-gb,eo,es,et,eu,fa,fi,fo,fr,fr-ca,gl,gu,he,hi,hr,hu,id,is,it,ja,ka,km,ko,ku,lt,lv,mk,mn,ms,nb,nl,no,pl,pt,pt-br,ro,ru,si,sk,sl,sq,sr,sr-latn,sv,th,tr,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		icons: 'maximize', // %REMOVE_LINE_CORE%
@@ -197,7 +174,7 @@
 						} );
 
 						// Fixing positioning editor chrome in Firefox break design mode. (#5149)
-						CKEDITOR.env.gecko && refreshCursor( editor );
+						CKEDITOR.env.gecko && CKEDITOR.tools.refreshCursor( editor );
 
 					} else if ( this.state == CKEDITOR.TRISTATE_ON ) // Restore from fullscreen if the state is on.
 					{
@@ -255,7 +232,7 @@
 					if ( editor.mode == 'wysiwyg' ) {
 						if ( savedSelection ) {
 							// Fixing positioning editor chrome in Firefox break design mode. (#5149)
-							CKEDITOR.env.gecko && refreshCursor( editor );
+							CKEDITOR.env.gecko && CKEDITOR.tools.refreshCursor( editor );
 
 							editor.getSelection().selectRanges( savedSelection );
 							var element = editor.getSelection().getStartElement();
