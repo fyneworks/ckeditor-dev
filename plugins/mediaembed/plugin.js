@@ -255,7 +255,9 @@
 				}
 			},
 			downcast: function() {
-				return new CKEDITOR.htmlParser.fragment.fromHtml( this.data.url, 'oembed' );
+				var ret = new CKEDITOR.htmlParser.element( 'oembed' );
+				ret.add( new CKEDITOR.htmlParser.text( this.data.url ) );
+				return ret;
 			}
 		},
 		'default': {
