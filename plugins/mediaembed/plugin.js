@@ -123,10 +123,12 @@
 
 			// Register a callback which will prevent filtering content inside mediaembed widget.
 			// It's required only for default strategy, because oembed strat contains only text node.
-			outputStrategy == 'default' && editor.filter.addElementCallback( function( el ) {
-				if ( el.attributes[ 'data-oembed-url' ] )
-					return CKEDITOR.FILTER_SKIP_TREE;
-			} );
+			if ( outputStrategy == 'default' ) {
+				editor.filter.addElementCallback( function( el ) {
+					if ( el.attributes[ 'data-oembed-url' ] )
+						return CKEDITOR.FILTER_SKIP_TREE;
+				} );
+			}
 
 			// Handling paste event, to convert paste URL into a widget.
 			editor.on( 'paste', function( evt ) {
