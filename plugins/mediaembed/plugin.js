@@ -119,7 +119,8 @@
 			editor.widgets.add( 'mediaEmbed', widgetDefinition );
 
 			// Register a callback which will prevent filtering content inside mediaembed widget.
-			editor.filter.addElementCallback( function( el ) {
+			// It's required only for default strategy, because oembed strat contains only text node.
+			outputStrategy == 'default' && editor.filter.addElementCallback( function( el ) {
 				if ( el.attributes[ 'data-oembed-url' ] )
 					return CKEDITOR.FILTER_SKIP_TREE;
 			} );
@@ -198,6 +199,7 @@
 
 	/**
 	 * @class CKEDITOR.plugins.mediaembed
+	 * @singleton
 	 */
 	CKEDITOR.plugins.mediaembed = {};
 
@@ -266,10 +268,11 @@
 				var children = element.children,
 					ret;
 				data.url = element.attributes[ 'data-oembed-url' ];
-
-				// If element has at least child, and we need to ensure that it's not a whitespace text node.
+				// Content preserving - if content is already loaded there is no need to fire
+				// extra http request). Occurs when:
+				// - element has at least child
+				// - and that child can not be whitespace-only/empty text node
 				if ( children.length && ( children[ 0 ].type != CKEDITOR.NODE_TEXT || CKEDITOR.tools.trim( children[ 0 ].value ) ) ) {
-					// Reloading oembed content may be skipped.
 					data.skipReload = 1;
 					return element;
 				}
@@ -346,6 +349,20 @@
 	 *
 	 * @since 4.4
 	 * @cfg {Boolean} [mediaEmbed_disablePasteUpcast=false]
+	 * @member CKEDITOR.config
+	 */
+
+	/**
+	 * Defines which output strategy should be used. We might use multiple strategies, to
+	 * change output markup.
+	 *
+	 * Strategies implementations are defined in:
+	 *
+	 * * {@link CKEDITOR.plugins.mediaembed#outputStrategies} - allows to override widget definition members
+	 * * {@link CKEDITOR.plugins.mediaembed#pasteDecorator} - used to decoreate pasted (positively matched) URL
+	 *
+	 * @since 4.4
+	 * @cfg {String} [mediaEmbed_output='default']
 	 * @member CKEDITOR.config
 	 */
 
