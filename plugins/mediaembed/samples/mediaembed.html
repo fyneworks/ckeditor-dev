@@ -17,6 +17,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	<style type="text/css">
 	.description.providers ul { float: left; width: 45%; }
 	.description.providers br { clear: both; }
+	.description.paste input{ width: 310px; }
 	</style>
 </head>
 <body>
@@ -51,10 +52,77 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 
 	<br>
 
+	<div class="description paste">
+		<h2>Media Embed paste support</h2>
+
+		<p>
+			By default Media Embed plugin comes with feature to detect embeddable content link in pasted text. In case of positive match it will automatically convert link into Media Embed widget.
+		</p>
+
+		<p>
+			This feature may be disabled by the <a href="http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-mediaEmbed_disablePasteUpcast">CKEDITOR.config.mediaEmbed_disablePasteUpcast</a> config property.
+		</p>
+
+		<h3>Try it yourself</h3>
+
+		<p>
+			Simply copy following link: <input type="text" value="https://twitter.com/ckeditor/status/401373919157821441" name="sample_media_link" readonly="readonly" onclick="this.select();" />
+		</p>
+
+		<p>
+			And paste it to editor below:
+		</p>
+	</div>
+
+	<textarea id="editor2" name="editor2" cols="10" rows="10">
+		&lt;h1&gt;Media Embed paste support&lt;/h1&gt;
+		&lt;p&gt;Paste the link below:&lt;/p&gt;
+		&lt;p&gt;&lt;/p&gt;
+	</textarea>
+
+	<br>
+
+	<div class="description">
+		<h2>Output strategies</h2>
+
+		<p>
+			Some developers might actually need to customize widget behaviour. It may affect output html. Media embed plugin ships with 2 output strategies.
+		</p>
+
+		<ul>
+			<li><strong>default</strong> - which includes whole html</li>
+			<li><strong>oembed</strong> - which places <code>oembed</code> element with it's link as innerHtml</li>
+		</ul>
+
+		<p>
+			Output strategies may be configured using the <a href="http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-mediaEmbed_output">CKEDITOR.config.mediaEmbed_output</a> property.
+		</p>
+
+<pre class="samples">CKEDITOR.replace( 'editor3', {
+	extraPlugins: 'mediaembed',
+	mediaEmbed_output: 'oembed'
+} );</pre>
+
+		<p>
+			Editor below uses oembed output strategy, you can see that by clicking source toolbar button.
+		</p>
+	</div>
+
+	<textarea id="editor3" name="editor3" cols="10" rows="10">
+		&lt;h1&gt;This editor uses oembed output strategy&lt;/h1&gt;
+		&lt;p&gt;You can confirm that by clicking source toolbar button, it's using &amp;lt;oembed&amp;gt;link&amp;lt;/oembed&amp;gt; abstract representation, rather than raw HTML.&lt;/p&gt;
+		&lt;oembed&gt;https://twitter.com/ckeditor/status/401373919157821441&lt;/oembed&gt;
+	</textarea>
+
+	<br>
+
 	<div class="description providers">
+		<h2>Supported providers</h2>
+
 		<p>
 			Currently Media Embed supports the following services:
 		</p>
+
 		<ul>
 			<li>ADN</li>
 			<li>ASCII Art Farts</li>
@@ -78,7 +146,9 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 			<li>Path</li>
 			<li>Picplz</li>
 			<li>Qik</li>
-		</ul><ul>
+		</ul>
+
+		<ul>
 			<li>Rdio</li>
 			<li>Skitch</li>
 			<li>SlideShare</li>
@@ -102,6 +172,7 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 			<li>YouTube</li>
 			<li>iTunes Movie Trailers</li>
 		</ul>
+
 		<br>
 	</div>
 
@@ -109,6 +180,13 @@ CKEDITOR.replace( '<em>textarea_id</em>', {
 		CKEDITOR.replace( 'editor1', {
 			extraPlugins: 'mediaembed',
 			height: 500
+		} );
+		CKEDITOR.replace( 'editor2', {
+			extraPlugins: 'mediaembed'
+		} );
+		CKEDITOR.replace( 'editor3', {
+			extraPlugins: 'mediaembed',
+			mediaEmbed_output: 'oembed'
 		} );
 	</script>
 
