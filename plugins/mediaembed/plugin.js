@@ -30,9 +30,10 @@
 			var config = editor.config;
 
 			// Note that default providers are regexfied only once.
-			config.mediaEmbed_providers = config.mediaEmbed_providers ?
-				regexifyPatterns( config.mediaEmbed_providers.split( ',' ) ) :
-				DEFAULT_PROVIDERS;
+			if ( config.mediaEmbed_providers )
+				regexifyPatterns( config.mediaEmbed_providers );
+			else
+				config.mediaEmbed_providers = DEFAULT_PROVIDERS;
 
 			config.mediaEmbed_providersWhitelist = ( config.mediaEmbed_providersWhitelist && config.mediaEmbed_providersWhitelist.split( ',' ) ) || [];
 
@@ -328,13 +329,15 @@
 		return html;
 	}
 
+	// Iterates over given array of providers, visits each entry `patterns`
+	// property and changes strings into RegExps.
+	// **Note: it will change providersArray object**
 	// @param {Object} providersArray Array containing providers to be regexified.
 	function regexifyPatterns( providersArray ) {
-		var PROVIDERS = providersArray,
-			provider, patterns, i, j;
+		var provider, patterns, i, j;
 
-		for ( i = 0; i < PROVIDERS.length; ++i ) {
-			provider = PROVIDERS[ i ];
+		for ( i = 0; i < providersArray.length; ++i ) {
+			provider = providersArray[ i ];
 			patterns = provider.patterns;
 
 			for ( j = 0; j < patterns.length; ++j )
