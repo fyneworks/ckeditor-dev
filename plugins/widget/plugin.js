@@ -3091,7 +3091,7 @@
 		var widgetDataAttr = widget.element.data( 'cke-widget-data' );
 
 		if ( widgetDataAttr )
-			widget.setData( JSON.parse( widgetDataAttr ) );
+			widget.setData( JSON.parse( CKEDITOR.tools.htmlDecodeAttr( widgetDataAttr ) ) );
 		if ( startupData )
 			widget.setData( startupData );
 
@@ -3116,7 +3116,7 @@
 	}
 
 	function writeDataToElement( widget ) {
-		widget.element.data( 'cke-widget-data', JSON.stringify( widget.data ) );
+		widget.element.data( 'cke-widget-data', CKEDITOR.tools.htmlEncodeAttr( JSON.stringify( widget.data ) ) );
 	}
 
 	//
