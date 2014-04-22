@@ -35,6 +35,9 @@
 				var langs = editor._.codesnippet.langs =
 					editor.config.codeSnippet_languages || highlighter.languages;
 
+				if ( langs[ '' ] === '' )
+					langs[ '' ] = editor.lang.common.notSet;
+
 				// We might escape special regex chars below, but we expect that there
 				// should be no crazy values used as lang keys.
 				editor._.codesnippet.langsRegex = new RegExp( '(?:^|\\s)language-(' +
@@ -64,6 +67,7 @@
 			if ( !editor._.codesnippet.highlighter ) {
 				var hljsHighlighter = new CKEDITOR.plugins.codesnippet.highlighter( {
 					languages: {
+						'': '',
 						apache: 'Apache',
 						bash: 'Bash',
 						coffeescript: 'CoffeeScript',
