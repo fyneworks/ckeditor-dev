@@ -46,7 +46,7 @@
 							items: langSelectItems,
 							'default': langSelectDefaultValue,
 							setup: function( widget ) {
-								this.setValue( widget.ready ? widget.data.lang : '' );
+								this.setValue( widget.ready && widget.data.lang ? widget.data.lang : langSelectDefaultValue );
 
 								// The only way to have an empty select value in Firefox is
 								// to set a negative selectedIndex.
