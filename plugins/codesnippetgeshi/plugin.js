@@ -52,6 +52,7 @@
 
 	// A list of default languages supported by GeSHi.
 	var languages = {
+		'': '',
 		abap: 'ABAP',
 		actionscript: 'ActionScript',
 		ada: 'Ada',
