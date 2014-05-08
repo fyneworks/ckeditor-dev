@@ -87,9 +87,16 @@
 	}, {
 		type: ATTRTYPE_PARAM, name: names[ i ]
 	} ];
+
+	// this attributes has default value true;
 	names = [ 'allowFullScreen', 'play', 'loop', 'menu' ];
 	for ( i = 0; i < names.length; i++ )
 		attributesMap[ names[ i ] ][ 0 ][ 'default' ] = attributesMap[ names[ i ] ][ 1 ][ 'default' ] = true;
+
+	// this attributes have to be keep in editor code independently on value
+	names = [ 'allowFullScreen' ];
+	for ( i = 0; i < names.length; i++ )
+		attributesMap[ names[ i ] ][ 0 ][ 'preventRemove' ] = attributesMap[ names[ i ] ][ 1 ][ 'preventRemove' ] = true;
 
 	var defaultToPixel = CKEDITOR.tools.cssLength;
 
@@ -101,6 +108,7 @@
 		var isCheckbox = ( this instanceof CKEDITOR.ui.dialog.checkbox );
 		for ( var i = 0; i < attributes.length; i++ ) {
 			var attrDef = attributes[ i ];
+
 			switch ( attrDef.type ) {
 				case ATTRTYPE_OBJECT:
 					if ( !objectNode )
@@ -160,7 +168,7 @@
 					if ( !objectNode || ( attrDef.name == 'data' && embedNode && !objectNode.hasAttribute( 'data' ) ) )
 						continue;
 					var value = this.getValue();
-					if ( isRemove || isCheckbox && value === attrDef[ 'default' ] )
+					if ( !attrDef.preventRemove && ( isRemove || isCheckbox && value === attrDef[ 'default' ] ) )
 						objectNode.removeAttribute( attrDef.name );
 					else
 						objectNode.setAttribute( attrDef.name, value );
@@ -169,7 +177,7 @@
 					if ( !objectNode )
 						continue;
 					value = this.getValue();
-					if ( isRemove || isCheckbox && value === attrDef[ 'default' ] ) {
+					if ( !attrDef.preventRemove && ( isRemove || isCheckbox && value === attrDef[ 'default' ] ) ) {
 						if ( attrDef.name in paramMap )
 							paramMap[ attrDef.name ].remove();
 					} else {
@@ -189,7 +197,7 @@
 					if ( !embedNode )
 						continue;
 					value = this.getValue();
-					if ( isRemove || isCheckbox && value === attrDef[ 'default' ] )
+					if ( !attrDef.preventRemove && ( isRemove || isCheckbox && value === attrDef[ 'default' ] ) )
 						embedNode.removeAttribute( attrDef.name );
 					else
 						embedNode.setAttribute( attrDef.name, value );
