@@ -110,7 +110,11 @@
 				return obj;
 
 			// Objects.
-			clone = new obj.constructor();
+			try {
+				clone = new obj.constructor();
+			} catch ( e ) {
+				return obj;
+			}
 
 			for ( var propertyName in obj ) {
 				var property = obj[ propertyName ];
