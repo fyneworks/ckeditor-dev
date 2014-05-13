@@ -722,7 +722,8 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 	 * @returns {Boolean}
 	 */
 	isReadOnly: function( allowDeopt ) {
-		var element = this;
+		var element = this,
+			contentEditableAttr;
 		if ( this.type != CKEDITOR.NODE_ELEMENT )
 			element = this.getParent();
 		allowDeopt = allowDeopt && CKEDITOR.env.webkit;
@@ -735,10 +736,12 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 			while ( element ) {
 				if ( element.data( 'cke-editable' ) )
 					break;
+				// Enforce lowercase.
+				contentEditableAttr = (element.getAttribute( 'contentEditable' ) + '').toLowerCase();
 
-				if ( element.getAttribute( 'contentEditable' ) == 'false' )
+				if ( contentEditableAttr == 'false' )
 					return true;
-				else if ( element.getAttribute( 'contentEditable' ) == 'true' )
+				else if ( contentEditableAttr == 'true' || contentEditableAttr === '' )
 					break;
 
 				element = element.getParent();
