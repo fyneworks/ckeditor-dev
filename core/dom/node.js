@@ -717,18 +717,21 @@ CKEDITOR.tools.extend( CKEDITOR.dom.node.prototype, {
 	 *		element.isReadOnly(); // true
 	 *
 	 * @since 3.5
+	 * @param {Boolean} allowDeopt - if `true` will allow to use slower, but more reliable `contenteditable`
+	 * attribute checking. This applies only to Webkit based browsers.
 	 * @returns {Boolean}
 	 */
-	isReadOnly: function() {
+	isReadOnly: function( allowDeopt ) {
 		var element = this;
 		if ( this.type != CKEDITOR.NODE_ELEMENT )
 			element = this.getParent();
+		allowDeopt = allowDeopt && CKEDITOR.env.webkit;
 
-		if ( element && typeof element.$.isContentEditable != 'undefined' )
+		if ( element && !allowDeopt && typeof element.$.isContentEditable != 'undefined' )
 			return !( element.$.isContentEditable || element.data( 'cke-editable' ) );
 		else {
 			// Degrade for old browsers which don't support "isContentEditable", e.g. FF3
-
+			// Also applies to Webkit, because of their optimizations of isContentEditable prop. (#9814)
 			while ( element ) {
 				if ( element.data( 'cke-editable' ) )
 					break;

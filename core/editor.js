@@ -336,7 +336,8 @@
 						editor.element.is( 'textarea' ) ?
 								editor.element.hasAttribute( 'disabled' )
 							:
-								editor.element.isReadOnly()
+								// We need to use deoptimized determining for Webkit. (#9814)
+								editor.element.isReadOnly( true )
 					:
 						editor.elementMode == CKEDITOR.ELEMENT_MODE_REPLACE ?
 								editor.element.hasAttribute( 'disabled' )
