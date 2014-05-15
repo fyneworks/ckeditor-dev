@@ -106,15 +106,11 @@
 			}
 
 			// "Static" types.
-			if ( obj === null || ( typeof( obj ) != 'object' ) || ( obj instanceof String ) || ( obj instanceof Number ) || ( obj instanceof Boolean ) || ( obj instanceof Date ) || ( obj instanceof RegExp ) )
+			if ( obj === null || ( typeof( obj ) != 'object' ) || ( obj instanceof String ) || ( obj instanceof Number ) || ( obj instanceof Boolean ) || ( obj instanceof Date ) || ( obj instanceof RegExp ) || (window.jQuery &&  obj instanceof jQuery ) )
 				return obj;
 
 			// Objects.
-			try {
-				clone = new obj.constructor();
-			} catch ( e ) {
-				return obj;
-			}
+			clone = new obj.constructor();
 
 			for ( var propertyName in obj ) {
 				var property = obj[ propertyName ];
